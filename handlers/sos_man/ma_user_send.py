@@ -4,6 +4,7 @@ from aiogram.types import Message, CallbackQuery
 from typing import List
 
 from data.config import MAN_GROUP
+from handlers.sos_all.man_woman_handlers import sos_five
 from keyboards.default.savol_dk import savol_ck
 from keyboards.inline.sos_inline_keyboards import user_yes_no, user_check_ikeys
 
@@ -23,9 +24,7 @@ async def first_check_man(call, user_id, text_id=None, any_id=None, m_id=False, 
                                           reply_markup=user_check_ikeys)
                 await Man_State.user_checkone.set()
             else:
-                await call.message.answer(text='Саволингиз ҳақида админларимиз огоҳлантирилди! Бештагача савол '
-                                               'юборишингиз мумкин! Аввалги саволларингизга жавоб'
-                                               'берилганидан сўнг яна савол юборсангиз бўлади!')
+                await call.message.answer(text=f'Саволингиз ҳақида админларимиз огоҳлантирилди!\n\n{sos_five}')
         elif call.data == 'user_no_again':
             if m_id:
                 await sdb.delete_man_id(m_id=text_id)
@@ -46,28 +45,6 @@ async def second_check_man(call, state):
         await call.message.answer('Бош меню')
         await state.finish()
     await call.message.delete()
-
-
-@dp.message_handler(text="❓ Савол ва таклифлар", state='*')
-async def sos_func(msg: Message):
-    javob = '<b><i>Фақат ботга оид савол ва таклифларга жавоб берамиз!!!' \
-            '\n\nДинимиз борасида саволларингиз бўлса қуйидаги манбалардан фойдаланишингиз мумкин:</i></b>' \
-            '\n\nhttp://savollar.islom.uz/\n\nhttp://savollar.muslim.uz\n\nhttp://www.savollar.muslimaat.uz' \
-            '\n\n<b><i>Тугмалардан бирини танланг:</i></b>'
-    await msg.answer(javob, reply_markup=savol_ck, disable_web_page_preview=True)
-    await Man_Woman_State.man_woman.set()
-
-
-@dp.message_handler(state=Man_Woman_State.man_woman)
-async def sos_manwoman(msg: Message):
-        javob = '<b><i>Савол ва таклифларингизни юборишингиз мумкин. Админларимиз тез фурсатда жавоб беришга ' \
-                'ҳаракат қиладилар</i></b>'
-        if msg.text == 'Эркаклар':
-            await msg.answer(javob)
-            await Man_Woman_State.man_one.set()
-        elif msg.text == 'Аёллар':
-            await msg.answer(javob)
-            await Man_Woman_State.woman_one.set()
 
 
 @dp.message_handler(is_media_group=True, content_types=['video', 'photo', 'document', 'voice'],

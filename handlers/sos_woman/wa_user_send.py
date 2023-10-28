@@ -4,6 +4,7 @@ from aiogram.types import Message, CallbackQuery
 from typing import List
 
 from data.config import WOMAN_GROUP
+from handlers.sos_all.man_woman_handlers import sos_five
 from keyboards.inline.sos_inline_keyboards import user_yes_no, user_check_ikeys
 
 from loader import dp, sdb, bot
@@ -15,16 +16,14 @@ async def first_check_woman(call, user_id, text_id=None, any_id=None, m_id=False
         if call.data == 'user_yes':
             woman_questions = await sdb.select_all_womanuser(user_id=user_id)
             if len(woman_questions) < 5:
-                msg = await bot.send_message(chat_id=WOMAN_GROUP,
-                                             text='Ботга янги хабар қабул қилинди! Кўриш учун /woman_questions '
-                                                  'буйруғини киритинг')
+                await bot.send_message(chat_id=WOMAN_GROUP,
+                                       text='Ботга янги хабар қабул қилинди! Кўриш учун /woman_questions '
+                                            'буйруғини киритинг')
                 await call.message.answer('Саволингиз ҳақида админларимиз огоҳлантирилди! Яна хабар юборасизми?',
                                           reply_markup=user_check_ikeys)
                 await Woman_State.user_checkone.set()
             else:
-                await call.message.answer(text='Саволингиз ҳақида админларимиз огоҳлантирилди! Бештагача савол '
-                                               'юборишингиз мумкин! Аввалги саволларингизга жавоб'
-                                               'берилганидан сўнг яна савол юборсангиз бўлади!')
+                await call.message.answer(text=f'Саволингиз ҳақида админларимиз огоҳлантирилди!\n\n{sos_five}')
         elif call.data == 'user_no_again':
             if m_id:
                 await sdb.delete_woman_id(m_id=text_id)

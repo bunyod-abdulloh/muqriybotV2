@@ -251,13 +251,13 @@ class SOS_Database:
         sql = "SELECT * FROM bot_answer WHERE gender=$1"
         return await self.execute(sql, gender, fetch=True)
 
-    async def update_bot_answerman(self, text, gender):
-        sql = "UPDATE bot_answer SET man=$1 WHERE gender=$2"
-        return await self.execute(sql, text, gender, execute=True)
-
-    async def update_bot_answerwoman(self, text, gender):
-        sql = "UPDATE bot_answer SET woman=$1 WHERE gender=$2"
-        return await self.execute(sql, text, gender, execute=True)
+    async def update_bot_answer(self, text, gender, man=True):
+        if man:
+            sql = "UPDATE bot_answer SET man=$1 WHERE gender=$2"
+            return await self.execute(sql, text, gender, execute=True)
+        else:
+            sql = "UPDATE bot_answer SET woman=$1 WHERE gender=$2"
+            return await self.execute(sql, text, gender, execute=True)
 
     async def delete_bot_answer(self, gender):
         await self.execute("DELETE FROM bot_answer WHERE gender=$1", gender, execute=True)

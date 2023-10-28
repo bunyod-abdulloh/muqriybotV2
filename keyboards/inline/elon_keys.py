@@ -17,16 +17,16 @@ yes_no = InlineKeyboardMarkup(
     ]
 )
 
-savol_buttons = ReplyKeyboardMarkup(
-    keyboard=[
-        [
-            KeyboardButton('Аёллар'),
-            KeyboardButton('Эркаклар'),
-        ],
-        [
-            KeyboardButton('🏡 Бош меню'),
-        ],
-    ],
-    resize_keyboard=True,
-    one_time_keyboard=True
-)
+# savol_buttons = ReplyKeyboardMarkup(
+#     keyboard=[
+#         [
+#             KeyboardButton('Аёллар'),
+#             KeyboardButton('Эркаклар'),
+#         ],
+#         [
+#             KeyboardButton('🏡 Бош меню'),
+#         ],
+#     ],
+#     resize_keyboard=True,
+#     one_time_keyboard=True
+# )

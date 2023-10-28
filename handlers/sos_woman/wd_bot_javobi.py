@@ -14,7 +14,7 @@ wd_one = {}
 
 
 @dp.callback_query_handler(state=WomanAdmin.bot_one)
-async def adm_answer_fone(call: CallbackQuery, state: FSMContext):
+async def woman_bot_answer(call: CallbackQuery, state: FSMContext):
     user_id = wuser_id['user_id']
     audio_db = await sdb.select_woman_audio(user_id=user_id, turi='audio')
     document_db = await sdb.select_woman_document(user_id=user_id, turi='document')
@@ -94,7 +94,7 @@ async def bat_one_func(msg: Message):
 
 
 @dp.callback_query_handler(state=WomanAdmin.bot_two)
-async def bat_two_func(call: CallbackQuery, state: FSMContext):
+async def wd_ba_update(call: CallbackQuery, state: FSMContext):
     user_id = wuser_id['user_id']
     audio_db = await sdb.select_woman_audio(user_id=user_id, turi='audio')
     document_db = await sdb.select_woman_document(user_id=user_id, turi='document')
@@ -120,9 +120,9 @@ async def bat_two_func(call: CallbackQuery, state: FSMContext):
 
 
 @dp.message_handler(state=WomanAdmin.bot_editone)
-async def adm_answer_ftwo(msg: Message, state: FSMContext):
+async def wd_ba_update_(msg: Message, state: FSMContext):
     try:
-        await sdb.update_bot_answerwoman(text=msg.text, gender='woman')
+        await sdb.update_bot_answer(text=msg.text, gender='woman')
         await msg.answer(text='Бот жавоби ўзгартирилди!')
         await msg.answer('❓ Саволлар бўлими', reply_markup=await wbutton_one())
         await WomanAdmin.SOS_one.set()

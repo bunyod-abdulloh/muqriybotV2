@@ -7,6 +7,8 @@ from handlers.users.help import AlbumMiddleware
 
 
 async def on_startup(dispatcher):
+    await db.create()
+    await db.create_table_users()
     await sdb.create()
     await sdb.drop_table_bot_answer()
     await sdb.drop_table_woman_sos()

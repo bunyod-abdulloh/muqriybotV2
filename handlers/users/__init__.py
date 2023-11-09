@@ -1,4 +1,5 @@
 from . import start_hr
+from . import a_main_menu
 from . import admin_hr
 from . import quran_duolar
 from . import quranmuqriy_hr

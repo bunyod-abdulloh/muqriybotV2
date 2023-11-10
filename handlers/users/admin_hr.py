@@ -138,55 +138,69 @@ async def addadminone(call: CallbackQuery, state: FSMContext):
     await state.finish()
 
 
-@dp.message_handler(content_types=['video', 'audio', 'voice', 'photo', 'document', 'text'], user_id=ADMINS,
+@dp.message_handler(content_types=['any'], user_id=ADMINS,
                     state="forw")
-async def contumum(msg: types.Message, state: FSMContext):
-    if msg.text == 'Forward OFF':
-        await msg.answer("Forward ON state o'chirildi!")
+async def contumum(message: types.Message, state: FSMContext):
+
+    content_type = ["audio", "video", "voice", "document", "photo", "text"]
+
+    if message.text == 'Forward OFF':
+        await message.answer(
+            text="Forward ON state o'chirildi!"
+        )
         await state.finish()
     else:
-        if msg.video or msg.audio or msg.voice or msg.document or msg.photo or msg.text:
+        if message.content_type in content_type:
 
-            await msg.answer("Хабар юборилмоқда...",
-                             reply_markup=main_keyboard)
+            await message.answer(
+                text=f"Habar yuborilganligi haqidagi to'liq ma'lumot tez orada yuboriladi!",
+                reply_markup=main_keyboard
+            )
             await state.finish()
 
             users = await db.select_all_users()
             count_baza = await db.count_users()
             active = 0
             block = 0
-            counter = 0
+            count_one = 0
+            count_two = 0
 
             for user in users:
                 user_id = user[1]
                 try:
-                    await msg.forward(chat_id=user_id)
-
+                    await message.forward(
+                        chat_id=user_id
+                    )
                     active += 1
 
-                except:
-
+                except Exception:
                     block += 1
                     continue
 
-                counter += 1
+                count_one += 1
+                count_two += 1
 
-                if counter == 25:
-                    counter = 0
+                if count_one == 25:
+                    count_one = 0
                     await asyncio.sleep(0.5)
-            await state.finish()
 
-            await msg.answer(f"SENT: <b>{active}</b>"
-                             f"\nBLOCK: <b>{block}</b>"
-                             f"\nALL_USERS: <b>{count_baza}</b>")
+                if count_two == 1500:
+                    await asyncio.sleep(30)
+                    count_two = 0
+
+            await state.finish()
+            await message.answer(f"SENT: {active}"
+                                 f"\nBLOCK: {block}"
+                                 f"\nALL_USERS: {count_baza}")
 
     active = 0
     block = 0
-    counter = 0
+    count_one = 0
+    count_two = 0
 
 
 @dp.message_handler(is_media_group=True, content_types=types.ContentType.ANY, state="mediagroup")
-async def mediagr(msg: types.Message, album: List[types.Message], state: FSMContext):
+async def mediagr(message: types.Message, album: List[types.Message], state: FSMContext):
     media_group = types.MediaGroup()
     for obj in album:
         if obj.photo:
@@ -199,92 +213,123 @@ async def mediagr(msg: types.Message, album: List[types.Message], state: FSMCont
                                 "caption": obj.caption})
         except Exception as err:
             logging.exception(err)
-            return await msg.answer("Бу альбомни aiogram қўлламайди!")
+            return await message.answer("Бу альбомни aiogram қўлламайди!")
 
     users = await db.select_all_users()
     count_baza = await db.count_users()
     active = 0
     block = 0
-    counter = 0
-    c = 0
-    await msg.answer(f"<i>Хабар юборилганлиги ҳақидаги тўлиқ маълумот тез орада юборилади</i>",
-                     reply_markup=main_keyboard)
+    count_one = 0
+    count_two = 0
+    await message.answer(
+        text=f"Habar yuborilganligi haqidagi to'liq ma'lumot tez orada yuboriladi!",
+        reply_markup=main_keyboard
+    )
     for user in users:
         user_id = user[1]
         try:
-            await bot.send_media_group(chat_id=user_id,
-                                       media=media_group
-                                       )
+            await bot.send_media_group(
+                chat_id=user_id,
+                media=media_group
+            )
             active += 1
-            c += 1
 
         except Exception:
             block += 1
             continue
 
-        counter += 1
+        count_one += 1
+        count_two += 1
 
-        if counter == 25:
-            counter = 0
+        if count_one == 25:
+            count_one = 0
             await asyncio.sleep(0.5)
+
+        if count_two == 1500:
+            await asyncio.sleep(30)
+            count_two = 0
+
     await state.finish()
-    await msg.answer(f"SENT: <b>{active}</b>"
-                     f"\nBLOCK: <b>{block}</b>"
-                     f"\nALL_USERS: <b>{count_baza}</b>")
+    await message.answer(
+        text=f"SENT: {active}"
+             f"\nBLOCK: {block}"
+             f"\nALL_USERS: {count_baza}")
 
     active = 0
     block = 0
-    counter = 0
+    count_one = 0
+    count_two = 0
 
 
 @dp.message_handler(state="mediagroup")
 async def mediagryopish(msg: types.Message, state: FSMContext):
     if msg.text == "MediaGroup OFF":
-        await msg.answer("<b>MEDIA GROUP STATE</b> ЎЧИРИЛДИ!")
+        await msg.answer("<b>MEDIA GROUP STATE</b> o'chirildi!")
         await state.finish()
 
 
 @dp.message_handler(content_types=['video', 'audio', 'voice', 'photo', 'document', 'text'], user_id=ADMINS,
                     state="idolish")
-async def idvideo(msg: types.Message, state: FSMContext):
-    if msg.video:
-        await msg.answer(f"<b>VIDEO/CAPTION:</b> \n\n{msg.caption}"
-                         f"<b>\n\nVIDEO/ID:</b> \n\n{msg.video.file_id}")
-    if msg.audio:
-        await msg.answer(f"<b>AUDIO/CAPTION:</b> \n\n{msg.caption}"
-                         f"\n\n<b>AUDIO/ID:</b>\n\n{msg.audio.file_id}")
+async def idvideo(message: types.Message, state: FSMContext):
+    if message.video:
+        await message.answer(
+            text=f"<b>VIDEO/CAPTION:</b> \n\n{message.caption}"
+                 f"<b>\n\nVIDEO/ID:</b> \n\n{message.video.file_id}"
+        )
+    if message.audio:
+        await message.answer(
+            text=f"<b>AUDIO/CAPTION:</b> \n\n{message.caption}"
+                 f"\n\n<b>AUDIO/ID:</b>\n\n{message.audio.file_id}"
+        )
     if msg.voice:
-        await msg.answer(f"<b>AUDIO/CAPTION:</b> \n\n{msg.caption}"
-                         f"\n\n<b>AUDIO/ID:</b>\n\n{msg.voice.file_id}")
+        await msg.answer(
+            text=f"<b>AUDIO/CAPTION:</b> \n\n{msg.caption}"
+                 f"\n\n<b>AUDIO/ID:</b>\n\n{msg.voice.file_id}"
+        )
     if msg.photo:
-        await msg.answer(f"<b>PHOTO/CAPTION:</b>\n\n{msg.caption}"
-                         f"\n\n<b>PHOTO/ID:</b>\n\n{msg.photo[-1].file_id}")
+        await msg.answer(
+            text=f"<b>PHOTO/CAPTION:</b>\n\n{msg.caption}"
+                 f"\n\n<b>PHOTO/ID:</b>\n\n{msg.photo[-1].file_id}"
+        )
     if msg.document:
-        await msg.answer(f"<b>DOCUMENT/CAPTION:</b>\n\n{msg.caption}"
-                         f"\n\n<b>DOCUMENT/ID:</b>\n\n{msg.document.file_id}")
+        await msg.answer(
+            text=f"<b>DOCUMENT/CAPTION:</b>\n\n{msg.caption}"
+                 f"\n\n<b>DOCUMENT/ID:</b>\n\n{msg.document.file_id}"
+        )
 
     if msg.text == "ID OFF":
-        await msg.answer("<b>ID OLISH STATE</b> ЎЧИРИЛДИ!")
+        await msg.answer(
+            text="<b>ID OLISH STATE</b> o'chirildi!"
+        )
         await state.finish()
 
     elif msg.text:
-        await msg.answer("Сиз <b>ID OLISH STATE</b>дасиз."
-                         "\n\nЧиқиш учун <b>ID o'chirish</b> тугмасини босинг!")
+        await msg.answer(
+            text="Siz <b>ID OLISH STATE</b>dasiz."
+                 "\n\nChiqish uchun <b>ID o'chirish</b> tugmasinig bosing!"
+        )
 
 
 @dp.message_handler(content_types=['text'], state="elon", user_id=ADMINS)
 async def elonj(msg: types.Message, state: FSMContext):
     if msg.text == "Cancel sending messages":
-        await msg.answer("<b>E'LON JO'NATISH STATE</b> ЎЧИРИЛДИ!")
+        await msg.answer("<b>E'LON JO'NATISH STATE</b> o'chirildi!")
         await state.finish()
 
     elif msg.text:
         matn = msg.text
-        await msg.answer("<b><i>Юборадиган хабарингизни текширдингизми?"
-                         "\n\n<b>ОГОҲ БЎЛИНГ ХАБАРИНГИЗ КЎПЧИЛИККА БОРАДИ!!!</b>"
-                         "\n\nХабарни юборасизми?</i></b>", reply_markup=yes_no)
-        await state.update_data(text=matn)
-        await state.set_state("yes_no")
+        await msg.answer(
+            text="Yuboradigan habaringizni tekshirdingizmi?"
+                 "\n\nOgoh bo'ling, habaringiz ko'pchilikka boradi!"
+                 "\n\nHabarni yuborasizmi?",
+            reply_markup=yes_no
+        )
+        await state.update_data(
+            text=matn
+        )
+        await state.set_state(
+            state="yes_no"
+        )
 
 
 @dp.callback_query_handler(state="yes_no")
@@ -294,46 +339,50 @@ async def checkyes_no(call: types.CallbackQuery, state: FSMContext):
     count_baza = await db.count_users()
     active = 0
     block = 0
-    counter = 0
-    c_two = 0
+    count_one = 0
+    count_two = 0
     if call.data == "yes":
-        await call.message.answer(f"<i>Хабар юборилганлиги ҳақидаги тўлиқ маълумот тез орада юборилади</i>",
-                                  reply_markup=main_keyboard)
+        await call.message.answer(
+            text=f"Habar yuborilganligi haqidagi to'liq ma'lumot tez orada yuboriladi!",
+            reply_markup=main_keyboard
+        )
         await state.finish()
 
         for user in users:
             user_id = user[1]
             try:
-                await bot.send_message(chat_id=user_id,
-                                       text=data['text']
-                                       )
+                await bot.send_message(
+                    chat_id=user_id,
+                    text=data['text']
+                )
                 active += 1
-                c_two += 1
 
             except Exception:
                 block += 1
                 continue
 
-            counter += 1
+            count_one += 1
+            count_two += 1
 
-            if counter == 25:
-                counter = 0
+            if count_one == 25:
+                count_one = 0
                 await asyncio.sleep(0.5)
 
-            if c_two == 1500:
-                await call.message.answer(text=f"Хабар {c_two} та фойдаланувчига юборилди!"
-                                               f"\n\n3 дақиқадан сўнг яна юборилади!")
-                await asyncio.sleep(180)
-                c_two = 0
+            if count_two == 1500:
+                await asyncio.sleep(30)
+                count_two = 0
 
-        await call.message.answer(f"SENT: <b>{active}</b>"
-                                  f"\nBLOCK: <b>{block}</b>"
-                                  f"\nALL_USERS: <b>{count_baza}</b>")
+        await call.message.answer(f"SENT: {active}"
+                                  f"\nBLOCK: {block}"
+                                  f"\nALL_USERS: {count_baza}")
 
     elif call.data == "no_again":
-        await call.message.answer("Хабарингизни қайта юборишингиз мумкин!")
+        await call.message.answer(
+            text="Habaringizni qayta yuborishingiz mumkin!"
+        )
         await state.set_state("elon")
 
     active = 0
     block = 0
-    counter = 0
+    count_one = 0
+    count_two = 0

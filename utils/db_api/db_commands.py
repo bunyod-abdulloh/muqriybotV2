@@ -61,22 +61,33 @@ class Database:
         sql = "INSERT INTO Users (telegram_id) VALUES($1) returning *"
         return await self.execute(sql, telegram_id, fetchrow=True)
 
+    async def alter_add_column(self):
+        sql = "ALTER TABLE Users ADD COLUMN admin BOOLEAN NULL"
+        return await self.execute(sql, fetch=True)
+
+    async def alter_add_column_blocks(self):
+        sql = "ALTER TABLE Users ADD COLUMN blocks BIGINT NULL"
+        return await self.execute(sql, fetch=True)
+
+    async def update_admin(self, telegram_id, bool_value):
+        sql = f"UPDATE Users SET admin='{bool_value}' WHERE telegram_id='{telegram_id}'"
+        return await self.execute(sql, execute=True)
+
+    async def update_blocked_user(self, telegram_id, blocked_user):
+        sql = f"UPDATE Users SET blocks='{blocked_user}' WHERE telegram_id='{telegram_id}'"
+        return await self.execute(sql, execute=True)
+
     async def select_all_users(self):
         sql = "SELECT * FROM Users"
         return await self.execute(sql, fetch=True)
 
-    async def select_user(self, **kwargs):
-        sql = "SELECT * FROM Users WHERE "
-        sql, parameters = self.format_args(sql, parameters=kwargs)
-        return await self.execute(sql, *parameters, fetchrow=True)
+    async def select_user(self, telegram_id):
+        sql = "SELECT * FROM Users WHERE telegram_id=$1"
+        return await self.execute(sql, telegram_id, fetchrow=True)
 
     async def count_users(self):
         sql = "SELECT COUNT(*) FROM Users"
         return await self.execute(sql, fetchval=True)
-
-    async def update_user_username(self, username, telegram_id):
-        sql = "UPDATE Users SET username=$1 WHERE telegram_id=$2"
-        return await self.execute(sql, username, telegram_id, execute=True)
 
     async def delete_user_tgid(self, tgid):
         await self.execute("DELETE FROM Users WHERE telegram_id=$1", tgid, execute=True)

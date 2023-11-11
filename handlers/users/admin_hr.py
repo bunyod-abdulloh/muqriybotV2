@@ -30,6 +30,15 @@ delbutton.insert(InlineKeyboardButton(text="❌ O'chirish", callback_data='admin
 habar = "\nAvvalgi habarga javob olingan yo'qligini tekshirib ko'ring!"
 
 
+# @dp.message_handler(text="alter", state="*")
+# async def alter_table_admin(message: types.Message):
+#     await db.alter_add_column()
+#     await db.alter_add_column_blocks()
+#     await message.answer(
+#         text="Ustunlar qo'shildi!"
+#     )
+
+
 @dp.message_handler(text='/id', state='*')
 async def idaniqlash(message: types.Message):
     await message.answer(
@@ -41,8 +50,8 @@ async def idaniqlash(message: types.Message):
 async def boshmenyu_func(message: types.Message, state: FSMContext):
     try:
         await db.add_user(
-            telegram_id=
-            message.from_user.id)
+            telegram_id=message.from_user.id
+        )
     except asyncpg.exceptions.UniqueViolationError:
         pass
     await message.answer(
@@ -53,15 +62,37 @@ async def boshmenyu_func(message: types.Message, state: FSMContext):
 
 
 @dp.message_handler(text=['/admins'], user_id=ADMINS, state="*")
-async def buttons(message: types.Message, state: FSMContext):
-    admins = await sdb.all_admins()
-    if len(admins) == 0:
-        await sdb.add_admins(user_id=int(ADMINS),
-                             fullname="Бош админ")
-    await message.answer(
-        text='Админ бош менюси',
-        reply_markup=adm_adm
+async def buttons(message: types.Message):
+    admin = await db.select_user(
+        telegram_id=message.from_user.id
     )
+    if admin[2] is True:
+        await message.answer(
+            text="Jarayon tugatilmadi!",
+            reply_markup=main_keyboard
+        )
+    else:
+        await message.answer(
+            text='Admin bosh menyusi',
+            reply_markup=adm_adm
+        )
+
+
+# @dp.message_handler(text="Delete blocked users", user_id=ADMINS, state="*")
+# async def delete_blocked_users_admin(message: types.Message):
+#     blocked_users = await db.select_all_users()
+#
+#     c = 0
+#     for user in blocked_users:
+#         if user[3] is not None:
+#             c += 1
+#             await db.delete_user_tgid(
+#                 tgid=user[3]
+#             )
+#     await message.answer(
+#         text=f"Jami {c} ta foydalanuvchi ma'lumotlar omboridan o'chirildi!"
+#     )
+#     c = 0
 
 
 @dp.message_handler(text='users', user_id=ADMINS)
@@ -197,7 +228,6 @@ async def addadminone(call: CallbackQuery, state: FSMContext):
 
 @dp.message_handler(content_types=['any'], user_id=ADMINS, state="forw")
 async def contumum(message: types.Message, state: FSMContext):
-
     content_type = ["audio", "video", "voice", "document", "photo", "text"]
 
     if message.text == 'Forward OFF':
@@ -207,6 +237,10 @@ async def contumum(message: types.Message, state: FSMContext):
         await state.finish()
     else:
         if message.content_type in content_type:
+            await db.update_admin(
+                telegram_id=message.from_user.id,
+                bool_value=True
+            )
 
             await message.answer(
                 text=f"Habar yuborilganligi haqidagi to'liq ma'lumot tez orada yuboriladi!",
@@ -222,15 +256,18 @@ async def contumum(message: types.Message, state: FSMContext):
             count_two = 0
 
             for user in users:
-                user_id = user[1]
                 try:
                     await message.forward(
-                        chat_id=user_id
+                        chat_id=user[1]
                     )
                     active += 1
 
                 except Exception:
                     block += 1
+                    await db.update_blocked_user(
+                        telegram_id=user[1],
+                        blocked_user=user[1]
+                    )
                     continue
 
                 count_one += 1
@@ -241,13 +278,17 @@ async def contumum(message: types.Message, state: FSMContext):
                     await asyncio.sleep(0.5)
 
                 if count_two == 1500:
-                    await asyncio.sleep(30)
+                    await asyncio.sleep(60)
                     count_two = 0
 
             await state.finish()
             await message.answer(f"SENT: {active}"
                                  f"\nBLOCK: {block}"
                                  f"\nALL_USERS: {count_baza}")
+            await db.update_admin(
+                telegram_id=message.from_user.id,
+                bool_value=False
+            )
 
     active = 0
     block = 0
@@ -277,21 +318,29 @@ async def mediagr(message: types.Message, album: List[types.Message], state: FSM
     block = 0
     count_one = 0
     count_two = 0
+    await db.update_admin(
+        telegram_id=message.from_user.id,
+        bool_value=True
+    )
     await message.answer(
         text=f"Habar yuborilganligi haqidagi to'liq ma'lumot tez orada yuboriladi!",
         reply_markup=main_keyboard
     )
+
     for user in users:
-        user_id = user[1]
         try:
             await bot.send_media_group(
-                chat_id=user_id,
+                chat_id=user[1],
                 media=media_group
             )
             active += 1
 
         except Exception:
             block += 1
+            await db.update_blocked_user(
+                telegram_id=user[1],
+                blocked_user=user[1]
+            )
             continue
 
         count_one += 1
@@ -310,6 +359,10 @@ async def mediagr(message: types.Message, album: List[types.Message], state: FSM
         text=f"SENT: {active}"
              f"\nBLOCK: {block}"
              f"\nALL_USERS: {count_baza}")
+    await db.update_admin(
+        telegram_id=message.from_user.id,
+        bool_value=False
+    )
 
     active = 0
     block = 0
@@ -369,7 +422,6 @@ async def idvideo(message: types.Message, state: FSMContext):
 
 @dp.message_handler(content_types=['text'], state="elon", user_id=ADMINS)
 async def elonj(message: types.Message, state: FSMContext):
-
     if message.text == "Cancel sending messages":
         await message.answer(
             text="<b>E'LON JO'NATISH STATE</b> o'chirildi!"
@@ -402,15 +454,15 @@ async def checkyes_no(call: types.CallbackQuery, state: FSMContext):
     count_one = 0
     count_two = 0
     if call.data == "yes":
+        await db.update_admin(
+            user_id=call.from_user.id,
+            bool_value=True
+        )
         await call.message.answer(
             text=f"Habar yuborilganligi haqidagi to'liq ma'lumot tez orada yuboriladi!",
             reply_markup=main_keyboard
         )
         await state.finish()
-        wb = Workbook()
-        ws = wb.active
-
-        ws.append(["Active_Users", "Blocked_Users"])
 
         for user in users:
             try:
@@ -419,11 +471,13 @@ async def checkyes_no(call: types.CallbackQuery, state: FSMContext):
                     text=data['text']
                 )
                 active += 1
-                ws.append([user[1], " "])
 
             except Exception:
                 block += 1
-                ws.append([" ", user[1]])
+                await db.update_blocked_user(
+                    telegram_id=user[1],
+                    blocked_user=user[1]
+                )
                 continue
 
             count_one += 1
@@ -436,20 +490,14 @@ async def checkyes_no(call: types.CallbackQuery, state: FSMContext):
             if count_two == 1500:
                 await asyncio.sleep(30)
                 count_two = 0
-        wb.save("Muqriy_Users.xlsx")
-
-        await bot.send_document(
-            chat_id=call.from_user.id,
-            document=types.InputFile(
-                path_or_bytesio="Muqriy_Users.xlsx"
-            ),
-            reply_markup=main_keyboard
-        )
-        os.remove("Muqriy_Users.xlsx")
 
         await call.message.answer(f"SENT: {active}"
                                   f"\nBLOCK: {block}"
                                   f"\nALL_USERS: {count_baza}")
+        await db.update_admin(
+            telegram_id=call.from_user.id,
+            bool_value=False
+        )
 
     elif call.data == "no_again":
         await call.message.answer(

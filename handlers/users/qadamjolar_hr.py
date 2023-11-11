@@ -50,8 +50,9 @@ async def qadamjolar_first_handler(message: types.Message, state: FSMContext):
 
 @dp.callback_query_handler(state=MuqriyVideoStates.qadamjolar_menu)
 async def callback_resp(call: types.CallbackQuery, state: FSMContext):
+    await call.message.delete()
+
     if call.data in LATEST_RESULT.keys():
-        await call.message.delete()
         await bot.copy_message(
             chat_id=call.from_user.id,
             from_chat_id=CHANNEL_ID,
@@ -88,7 +89,7 @@ async def callback_resp(call: types.CallbackQuery, state: FSMContext):
         text = str()
         for i in datas:
             text += f"{MENU_POST[i - 1]}"
-        await call.message.edit_text(
+        await call.message.answer(
             text=text,
             reply_markup=keys
         )

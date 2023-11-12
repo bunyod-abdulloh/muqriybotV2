@@ -65,6 +65,10 @@ class Database:
         sql = "ALTER TABLE Users ADD COLUMN admin BOOLEAN NULL"
         return await self.execute(sql, fetch=True)
 
+    async def alter_drop_column_blocks(self):
+        await self.execute("ALTER TABLE Users DROP COLUMN admin",
+                           execute=True)
+
     async def alter_add_column_blocks(self):
         sql = "ALTER TABLE Users ADD COLUMN blocks BIGINT NULL"
         return await self.execute(sql, fetch=True)

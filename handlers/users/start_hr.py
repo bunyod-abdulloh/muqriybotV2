@@ -57,7 +57,9 @@ async def members(msg: ChatMemberUpdated):
 @dp.message_handler(text="🏡 Бош саҳифа", state="*")
 async def boshmenyu_handler(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
-    user_in_db = await db.select_user(telegram_id=user_id)
+    user_in_db = await db.select_user(
+        telegram_id=user_id
+    )
 
     await message.answer(
         text="🏡 Бош саҳифа",

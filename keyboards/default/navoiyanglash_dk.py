@@ -3,7 +3,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 nang_umum_keys = ReplyKeyboardMarkup(
 	keyboard=[
 		[
-			KeyboardButton("🏡 Бош меню"),
+			KeyboardButton("🏡 Бош саҳифа"),
 		],
 		[
 			KeyboardButton("🎧 Аyдиo"),
@@ -18,7 +18,7 @@ nang_aud_keys = ReplyKeyboardMarkup(
 	keyboard=[
 		[
 			KeyboardButton("⏮ Oлдинги"),
-			KeyboardButton("🏡 Бош меню"),
+			KeyboardButton("🏡 Бош саҳифа"),
 		],
 		[
 			KeyboardButton("1-3 суҳбатлар"),
@@ -39,7 +39,7 @@ nang_vid_keys = ReplyKeyboardMarkup(
 	keyboard=[
 		[
 			KeyboardButton("⏮ Oлдинги"),
-			KeyboardButton("🏡 Бош меню"),
+			KeyboardButton("🏡 Бош саҳифа"),
 		],
 		[
 			KeyboardButton("1-cyҳбат"),

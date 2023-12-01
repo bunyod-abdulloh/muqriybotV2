@@ -46,7 +46,7 @@ async def mbm_dk():
 	mbm_k = ReplyKeyboardMarkup(row_width=2,
 							   resize_keyboard=True,
 							   one_time_keyboard=True)
-	mbm_k.add("🏡 Бош меню")
+	mbm_k.add("🏡 Бош саҳифа")
 	mbm_k.add("🎧 Ayдио")
 	mbm_k.insert("🎬 Bидeо")
 	mbm_k.add("Мавлиди Шариф")
@@ -58,7 +58,7 @@ async def m1_dk():
 							   resize_keyboard=True,
 							   one_time_keyboard=True)
 	m1_k.add("⏮ Олдинги")
-	m1_k.insert("🏡 Бош меню")
+	m1_k.insert("🏡 Бош саҳифа")
 	m1_k.add("1-5 cонлар")
 	for n in m_list:
 		if n == '1-5 cонлар':
@@ -73,7 +73,7 @@ async def sharif_dk():
 								resize_keyboard=True,
 								one_time_keyboard=True)
 	sh_dk.add("⏮ Олдинги")
-	sh_dk.insert("🏡 Бош меню")
+	sh_dk.insert("🏡 Бош саҳифа")
 	sh_dk.add('1-5 атрлар')
 	for n in sh_list:
 		if n == '1-5 атрлар':

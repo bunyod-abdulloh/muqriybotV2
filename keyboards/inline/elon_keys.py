@@ -24,7 +24,7 @@ yes_no = InlineKeyboardMarkup(
 #             KeyboardButton('Эркаклар'),
 #         ],
 #         [
-#             KeyboardButton('🏡 Бош меню'),
+#             KeyboardButton('🏡 Бош саҳифа'),
 #         ],
 #     ],
 #     resize_keyboard=True,

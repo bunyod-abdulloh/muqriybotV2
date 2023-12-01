@@ -24,7 +24,7 @@ async def muqriy_dk():
     full = ReplyKeyboardMarkup(row_width=2,
                                resize_keyboard=True,
                                one_time_keyboard=True)
-    full.add("🏡 Бош меню")
+    full.add("🏡 Бош саҳифа")
     full.add("1 - 10 суралар")
     for n in muqriy_list:
         if n == "1 - 10 суралар":

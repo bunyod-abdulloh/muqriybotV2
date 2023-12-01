@@ -23,4 +23,4 @@ support_keys = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 support_keys.row('Аёллар', 'Эркаклар')
 
 bosh_menyu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-bosh_menyu.row('🏡 Бош меню')
+bosh_menyu.row('🏡 Бош саҳифа')

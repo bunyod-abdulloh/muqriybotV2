@@ -3,7 +3,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 qasam_bosqichlar = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text="🏡 Бош меню"),
+            KeyboardButton(text="🏡 Бош саҳифа"),
         ],
         [
             KeyboardButton(text="Биринчи босқич")
@@ -22,7 +22,7 @@ qasam01_default = ReplyKeyboardMarkup(
     keyboard=[
         [
             KeyboardButton(text="⏮ Олдинги"),
-            KeyboardButton(text="🏡 Бош меню"),
+            KeyboardButton(text="🏡 Бош саҳифа"),
         ],
         [
             KeyboardButton(text="Анонс"),
@@ -57,7 +57,7 @@ qasam02_default = ReplyKeyboardMarkup(
     keyboard=[
         [
             KeyboardButton(text="⏮ Олдинги"),
-            KeyboardButton(text="🏡 Бош меню"),
+            KeyboardButton(text="🏡 Бош саҳифа"),
         ],
         [
             KeyboardButton(text="Aнонс"),
@@ -89,7 +89,7 @@ qasam03_default = ReplyKeyboardMarkup(
     keyboard=[
         [
             KeyboardButton(text="⏮ Олдинги"),
-            KeyboardButton(text="🏡 Бош меню"),
+            KeyboardButton(text="🏡 Бош саҳифа"),
         ],
         [
             KeyboardButton(text="Мyқаддимa"),

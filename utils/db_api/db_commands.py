@@ -61,12 +61,12 @@ class Database:
         sql = "INSERT INTO Users (telegram_id) VALUES($1) returning *"
         return await self.execute(sql, telegram_id, fetchrow=True)
 
-    async def alter_add_column(self):
+    async def alter_add_column_admin(self):
         sql = "ALTER TABLE Users ADD COLUMN admin BOOLEAN NULL"
         return await self.execute(sql, fetch=True)
 
     async def alter_drop_column_blocks(self):
-        await self.execute("ALTER TABLE Users DROP COLUMN admin",
+        await self.execute("ALTER TABLE Users DROP COLUMN blocks",
                            execute=True)
 
     async def alter_add_column_blocks(self):
@@ -91,6 +91,10 @@ class Database:
 
     async def count_users(self):
         sql = "SELECT COUNT(*) FROM Users"
+        return await self.execute(sql, fetchval=True)
+
+    async def count_blocked_users(self):
+        sql = "SELECT COUNT(*) FROM Users WHERE blocks IS NOT NULL"
         return await self.execute(sql, fetchval=True)
 
     async def delete_user_tgid(self, tgid):

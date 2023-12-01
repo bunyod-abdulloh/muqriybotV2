@@ -3,7 +3,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 iqro_keys = ReplyKeyboardMarkup(
 	keyboard=[
 		[
-			KeyboardButton("🏡 Бош меню")
+			KeyboardButton("🏡 Бош саҳифа")
 		],
 		[
 			KeyboardButton("1-сон"),

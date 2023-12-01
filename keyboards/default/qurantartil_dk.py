@@ -3,7 +3,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 tartil01_keys = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text="🏡 Бош меню"),
+            KeyboardButton(text="🏡 Бош саҳифа"),
             KeyboardButton(text="Мyқaддимa"),  # lotincha y ishlatilgan
         ],
         [

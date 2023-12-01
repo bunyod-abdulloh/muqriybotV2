@@ -22,7 +22,7 @@ lugat = {'001.Фотиҳа': {'audio': 'CQACAgIAAxkBAAECu8tiiOkEqU1zz3POoR086bOc
 async def suralar38gacha():
     suralarkb = ReplyKeyboardMarkup(row_width=3, resize_keyboard=True, one_time_keyboard=True)
 
-    suralarkb.add(KeyboardButton(text="🏡 Бош меню"))
+    suralarkb.add(KeyboardButton(text="🏡 Бош саҳифа"))
     suralarkb.insert(KeyboardButton(text="Кейинги ⏭"))
     suralarkb.add(KeyboardButton(text="001.Фотиҳа"))
 
@@ -36,7 +36,7 @@ async def suralar38gacha():
 async def suralar76gacha():
     suralarkb = ReplyKeyboardMarkup(row_width=3, resize_keyboard=True, one_time_keyboard=True)
     suralarkb.insert(KeyboardButton(text="⏪ Олдинги"))
-    suralarkb.insert(KeyboardButton(text="🏡 Бош меню"))
+    suralarkb.insert(KeyboardButton(text="🏡 Бош саҳифа"))
     suralarkb.insert(KeyboardButton(text="Кейинги ⏭"))
 
     for n in t[38:76]:
@@ -49,7 +49,7 @@ async def suralar76gacha():
 async def suralar114gacha():
     suralarkb = ReplyKeyboardMarkup(row_width=3, resize_keyboard=True, one_time_keyboard=True)
     suralarkb.insert(KeyboardButton(text="⏪ Олдинги"))
-    suralarkb.insert(KeyboardButton(text="🏡 Бош меню"))
+    suralarkb.insert(KeyboardButton(text="🏡 Бош саҳифа"))
     suralarkb.add(KeyboardButton(text="077.Мурсалаат"))
 
     for n in t[77:114]:

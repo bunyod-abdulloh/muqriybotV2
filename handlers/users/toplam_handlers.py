@@ -2,7 +2,7 @@ from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 from aiogram.dispatcher import FSMContext
 
 from handlers.users.ilmiysuhbatlar_hr import CHANNEL_ID
-from keyboards.default.ilmiysuhbatlar_dk import is1_dk, allk
+from keyboards.default.ilmiysuhbatlar_dk import ilmiy_suhbatlar_home_page, audio_video_page
 from keyboards.inline.ilmiy_suhbatlar_harxil import tort_suhbat_video, tort_suhbat_audio, ilm_suhbat_inkeys
 from states.toplam_states import TortToplam
 
@@ -29,7 +29,7 @@ async def tort_suhbatlar():
 async def jonlifunc(msg: Message, state: FSMContext):
     if msg.text == "⏮ Олдинги":
         await msg.answer("⏮ Олдинги",
-                         reply_markup=await is1_dk())
+                         reply_markup=await ilmiy_suhbatlar_home_page())
         await state.set_state("ilmsuh")
     elif msg.text == "🎬 Видео":
         await msg.answer(text=await tort_suhbatlar(), reply_markup=await ilm_suhbat_inkeys(torttoplam=True))
@@ -54,7 +54,7 @@ async def tort_video_one(call: CallbackQuery, state: FSMContext):
                                    reply_markup=await ilm_suhbat_inkeys(back=True))
             await TortToplam.video_two.set()
         elif call.data == 'back_tash_suh2':
-            await call.message.answer('⬅ Ортга', reply_markup=allk)
+            await call.message.answer('⬅ Ортга', reply_markup=audio_video_page)
             await state.set_state("tortt")
     except Exception:
         pass
@@ -82,7 +82,7 @@ async def torttoplam_audio_one(call: CallbackQuery, state: FSMContext):
                                    reply_markup=await ilm_suhbat_inkeys(back=True))
             await TortToplam.audio_two.set()
         elif call.data == 'back_tash_suh2':
-            await call.message.answer('⬅ Ортга', reply_markup=allk)
+            await call.message.answer('⬅ Ортга', reply_markup=audio_video_page)
             await state.set_state("tortt")
     except Exception:
         pass

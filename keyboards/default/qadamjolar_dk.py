@@ -3,7 +3,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 qadamjolarumum = ReplyKeyboardMarkup(
 	keyboard=[
 		[
-			KeyboardButton("🏡 Бош меню")
+			KeyboardButton("🏡 Бош саҳифа")
 		],
 		[
 			KeyboardButton("🔈 Aудио"),
@@ -18,7 +18,7 @@ qadamjolarvid = ReplyKeyboardMarkup(
 	keyboard=[
 		[
 			KeyboardButton("⏮ Олдинги"),
-			KeyboardButton("🏡 Бош меню"),
+			KeyboardButton("🏡 Бош саҳифа"),
 		],
 		[
 			KeyboardButton('Умра сафарига борувчилар учун маслаҳатлар'),
@@ -76,7 +76,7 @@ qadamjolaraud = ReplyKeyboardMarkup(
 	keyboard=[
 		[
 			KeyboardButton("⏮ Олдинги"),
-			KeyboardButton("🏡 Бош меню"),
+			KeyboardButton("🏡 Бош саҳифа"),
 		],
 		[
 			KeyboardButton('1-4'),

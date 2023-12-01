@@ -3,7 +3,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 istiloh_sharh_keys = ReplyKeyboardMarkup(
 	keyboard=[
 		[
-			KeyboardButton(text="🏡 Бош меню"),
+			KeyboardButton(text="🏡 Бош саҳифа"),
 		],
 		[
 			KeyboardButton("Мусҳаф истилоҳлари шарҳи (1-қисм)"), #hammasi o'zbek kirillda
@@ -23,7 +23,7 @@ istiloh_keys = ReplyKeyboardMarkup(
 	keyboard=[
 		[
 			KeyboardButton("⏮ Oлдинги"),
-			KeyboardButton(text="🏡 Бош меню"),
+			KeyboardButton(text="🏡 Бош саҳифа"),
 		],
 		[
 			KeyboardButton("Суҳбатнинг тўлиқ шакли")

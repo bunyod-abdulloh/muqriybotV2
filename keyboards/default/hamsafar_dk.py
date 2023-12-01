@@ -20,7 +20,7 @@ h1 = ReplyKeyboardMarkup(row_width=2,
 						 resize_keyboard=True,
 						 one_time_keyboard=True)
 h = h_dkdict
-h1.add("🏡 Бош меню")
+h1.add("🏡 Бош саҳифа")
 h1.add(h[0])
 for n in h:
 	if n == h[0]:

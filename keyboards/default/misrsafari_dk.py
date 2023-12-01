@@ -3,7 +3,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 misrsafari_keys = ReplyKeyboardMarkup(
 	keyboard=[
 		[
-			KeyboardButton(text="🏡 Бош меню"),
+			KeyboardButton(text="🏡 Бош саҳифа"),
 		],
 		[
 			KeyboardButton('Имом Шотибийнинг мақом(қабр)лари зиёрати'),

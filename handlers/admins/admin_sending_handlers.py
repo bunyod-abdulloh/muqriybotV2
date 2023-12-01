@@ -14,37 +14,6 @@ from data.config import ADMINS
 from loader import dp, bot, db
 
 
-@dp.message_handler(text="Add column blocks", user_id=ADMINS, state="*")
-async def alter_table_admin(message: types.Message):
-    await db.alter_add_column_blocks()
-    await message.answer(
-        text="Blocks ustuni qo'shildi!"
-    )
-
-
-@dp.message_handler(text="Drop table blocks", user_id=ADMINS, state="*")
-async def drop_blocks_handler(message: types.Message):
-    await db.alter_drop_column_blocks()
-    await message.answer(
-        text="Blocks ustuni o'chirildi!"
-    )
-
-
-@dp.message_handler(text="🏡 Бош меню", state="*")
-async def boshmenyu_handler(message: types.Message, state: FSMContext):
-    try:
-        await db.add_user(
-            telegram_id=message.from_user.id
-        )
-    except asyncpg.exceptions.UniqueViolationError:
-        pass
-    await message.answer(
-        text="🏡 Бош меню",
-        reply_markup=main_keyboard
-    )
-    await state.finish()
-
-
 @dp.message_handler(text=['/admins'], user_id=ADMINS, state="*")
 async def buttons(message: types.Message):
     admin = await db.select_user(
@@ -60,31 +29,6 @@ async def buttons(message: types.Message):
             text='Admin bosh menyusi',
             reply_markup=adm_adm
         )
-
-
-@dp.message_handler(text="Delete blocked users", user_id=ADMINS, state="*")
-async def delete_blocked_users_admin(message: types.Message):
-    blocked_users = await db.select_all_users()
-
-    c = 0
-    for user in blocked_users:
-        if user[3] is not None:
-            c += 1
-            await db.delete_user_tgid(
-                tgid=user[3]
-            )
-    await message.answer(
-        text=f"Jami {c} ta foydalanuvchi ma'lumotlar omboridan o'chirildi!"
-    )
-    c = 0
-
-
-@dp.message_handler(text='users', user_id=ADMINS)
-async def admin_count_users(message: types.Message):
-    count = await db.count_users()
-    await message.answer(
-        text=f"\nBazada {count} ta foydalanuvchi mavjud"
-    )
 
 
 @dp.message_handler(text='Forward ON', user_id=ADMINS)
@@ -355,7 +299,7 @@ async def checkyes_no(call: types.CallbackQuery, state: FSMContext):
     count_two = 0
     if call.data == "yes":
         await db.update_admin(
-            user_id=call.from_user.id,
+            telegram_id=call.from_user.id,
             bool_value=True
         )
         await call.message.answer(

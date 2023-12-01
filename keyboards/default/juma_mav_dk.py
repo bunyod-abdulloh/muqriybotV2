@@ -9,6 +9,6 @@ juma_abutton = ReplyKeyboardMarkup(row_width=2,
                                    resize_keyboard=True,
                                    one_time_keyboard=True)
 juma_abutton.insert("⏮ Олдинги")
-juma_abutton.insert("🏡 Бош меню")
+juma_abutton.insert("🏡 Бош саҳифа")
 for n in juma_dicta.keys():
     juma_abutton.insert(n)

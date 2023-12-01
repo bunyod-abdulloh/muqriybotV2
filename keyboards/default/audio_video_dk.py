@@ -1,10 +1,10 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-allk = ReplyKeyboardMarkup(
+audio_video_page = ReplyKeyboardMarkup(
     keyboard=[
         [
             KeyboardButton(text="⏮ Олдинги"),
-            KeyboardButton(text="🏡 Бош меню"),
+            KeyboardButton(text="🏡 Бош саҳифа"),
         ],
         [
             KeyboardButton(text="🎧 Ayдиo"),
@@ -18,7 +18,7 @@ allk = ReplyKeyboardMarkup(
 alldk = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text="🏡 Бош меню"),
+            KeyboardButton(text="🏡 Бош саҳифа"),
         ],
         [
             KeyboardButton(text="🎧 Ayдиo"),

@@ -4,7 +4,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 savol_ck = ReplyKeyboardMarkup(resize_keyboard=True)
 savol_ck.insert('Аёллар')
 savol_ck.insert('Эркаклар')
-savol_ck.add('🏡 Бош меню')
+savol_ck.add('🏡 Бош саҳифа')
 
 yes_no = InlineKeyboardMarkup(
     row_width=2,

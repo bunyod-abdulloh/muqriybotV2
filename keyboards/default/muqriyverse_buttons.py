@@ -3,7 +3,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup
 
 suralar_default = 'Суралар'
-bosh_menu = '🏡 Бош меню'
+bosh_menu = '🏡 Бош саҳифа'
 
 suralar_dict = {'fotiha':{'toliq':9,'zip':10,'oyat_soni':7,'sura':'Фотиҳа','audio':{'basmala':35,'1':37,'2':39,'3':41,'4':43,'5':45,'6':47,'7':48},
 						  'screen':{'basmala':34,'1':36,'2':38,'3':40,'4':42,'5':44,'6':46,'7':46},'link':'http://tafsirihilol.uz/main/read/30'},

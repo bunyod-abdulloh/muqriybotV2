@@ -3,7 +3,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 sham_m = ReplyKeyboardMarkup(
 	keyboard=[
 		[
-			KeyboardButton(text="🏡 Бош меню"),
+			KeyboardButton(text="🏡 Бош саҳифа"),
 		],
 		[
 			KeyboardButton(text="🎧 Aудио"),
@@ -18,7 +18,7 @@ sham_v = ReplyKeyboardMarkup(
 	keyboard=[
 		[
 			KeyboardButton(text="⏮ Oлдинги"),
-			KeyboardButton(text="🏡 Бош меню"),
+			KeyboardButton(text="🏡 Бош саҳифа"),
 		],
 		[
 			KeyboardButton(text="Mуқаддима"),
@@ -56,7 +56,7 @@ sham_a = ReplyKeyboardMarkup(
 	keyboard=[
 		[
 			KeyboardButton(text="⏮ Oлдинги"),
-			KeyboardButton(text="🏡 Бош меню"),
+			KeyboardButton(text="🏡 Бош саҳифа"),
 		],
 		[
 			KeyboardButton(text="Мyқaддима"),

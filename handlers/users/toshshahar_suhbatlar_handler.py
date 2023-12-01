@@ -2,7 +2,7 @@
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 from aiogram.dispatcher import FSMContext
 
-from keyboards.default.ilmiysuhbatlar_dk import allk, is1_dk
+from keyboards.default.ilmiysuhbatlar_dk import audio_video_page, ilmiy_suhbatlar_home_page
 from keyboards.inline.ilmiy_suhbatlar_harxil import toshshahar_suhbat_audio, toshshahar_suhbat_video, ilm_suhbat_inkeys
 from states.ilmiy_suhbatlar_states import ToshShaharSuhbatlar
 from loader import dp, bot
@@ -45,7 +45,7 @@ async def toshshahar_one(msg: Message, state: FSMContext):
         await message.delete()
         await ToshShaharSuhbatlar.video_one.set()
     elif msg.text == '⏮ Олдинги':
-        await msg.answer(msg.text, reply_markup=await is1_dk())
+        await msg.answer(msg.text, reply_markup=await ilmiy_suhbatlar_home_page())
         await state.set_state("ilmsuh")
 
 
@@ -59,7 +59,7 @@ async def toshshahar_audio_one(call: CallbackQuery):
                                    reply_markup=await ilm_suhbat_inkeys(back=True))
             await ToshShaharSuhbatlar.audio_two.set()
         elif call.data == 'back_tash_suh2':
-            await call.message.answer('⬅ Ортга', reply_markup=allk)
+            await call.message.answer('⬅ Ортга', reply_markup=audio_video_page)
             await ToshShaharSuhbatlar.one.set()
     except Exception:
         pass
@@ -75,7 +75,7 @@ async def toshshahar_video_one(call: CallbackQuery):
                                    reply_markup=await ilm_suhbat_inkeys(back=True))
             await ToshShaharSuhbatlar.video_two.set()
         elif call.data == 'back_tash_suh2':
-            await call.message.answer('⬅ Ортга', reply_markup=allk)
+            await call.message.answer('⬅ Ортга', reply_markup=audio_video_page)
             await ToshShaharSuhbatlar.one.set()
     except Exception:
         pass

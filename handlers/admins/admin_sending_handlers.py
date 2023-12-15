@@ -122,7 +122,7 @@ async def contumum(message: types.Message, state: FSMContext):
                     await asyncio.sleep(0.5)
 
                 if count_two == 1500:
-                    await asyncio.sleep(120)
+                    await asyncio.sleep(150)
                     count_two = 0
 
             await state.finish()
@@ -195,7 +195,7 @@ async def mediagr(message: types.Message, album: List[types.Message], state: FSM
             await asyncio.sleep(0.5)
 
         if count_two == 1500:
-            await asyncio.sleep(120)
+            await asyncio.sleep(150)
             count_two = 0
 
     await state.finish()

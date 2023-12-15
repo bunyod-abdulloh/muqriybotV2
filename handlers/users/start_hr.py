@@ -65,9 +65,7 @@ async def boshmenyu_handler(message: types.Message, state: FSMContext):
         text="🏡 Бош саҳифа",
         reply_markup=main_keyboard
     )
-    if user_in_db:
-        pass
-    else:
+    if user_in_db is None:
         await db.add_user(telegram_id=message.from_user.id)
     await state.finish()
 

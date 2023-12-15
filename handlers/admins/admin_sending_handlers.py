@@ -122,7 +122,7 @@ async def contumum(message: types.Message, state: FSMContext):
                     await asyncio.sleep(0.5)
 
                 if count_two == 1500:
-                    await asyncio.sleep(150)
+                    await asyncio.sleep(180)
                     count_two = 0
 
             await state.finish()
@@ -195,7 +195,7 @@ async def mediagr(message: types.Message, album: List[types.Message], state: FSM
             await asyncio.sleep(0.5)
 
         if count_two == 1500:
-            await asyncio.sleep(150)
+            await asyncio.sleep(180)
             count_two = 0
 
     await state.finish()
@@ -302,7 +302,7 @@ async def checkyes_no(call: types.CallbackQuery, state: FSMContext):
             telegram_id=call.from_user.id,
             bool_value=True
         )
-        await call.message.answer(
+        await call.message.edit_text(
             text=f"Habar yuborilganligi haqidagi to'liq ma'lumot tez orada yuboriladi!",
             reply_markup=main_keyboard
         )

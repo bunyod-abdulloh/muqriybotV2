@@ -13,10 +13,13 @@ sos_five = ("Сиз 5 та савол юбориб бўлдингиз!\nАвва
 
 @dp.message_handler(text="❓ Савол ва таклифлар", state='*')
 async def sos_func(message: types.Message):
-    javob = '<b><i>Фақат ботга оид савол ва таклифларга жавоб берамиз!!!' \
-            '\n\nДинимиз борасида саволларингиз бўлса қуйидаги манбалардан фойдаланишингиз мумкин:</i></b>' \
-            '\n\nhttp://savollar.islom.uz/\n\nhttp://savollar.muslim.uz\n\nhttp://www.savollar.muslimaat.uz' \
-            '\n\n<b><i>Тугмалардан бирини танланг:</i></b>'
+    javob = ('Assalomu alaykum!\n\nFaqat botga oid savol va takliflarga javob beramiz!\n\nDinimiz borasida '
+             'savollaringiz bo\'lsa quyidagi manbalardan foydalanishingiz mumkin:\n\nhttp://savollar.islom.uz/'
+             '\n\nhttp://savollar.muslim.uz\n\nhttp://www.savollar.muslimaat.uz'
+             '\n\nHasanxon qori akaga savollaringiz bo\'lsa facebookdagi \nhttps://www.facebook.com/Muqriy.Hasan '
+             'sahifalariga yuborishingiz yoki haftaning juma kunlari quyidagi manzilda Juma namozidan keyin qabullariga '
+             'borishingiz mumkin:'
+             '\nhttps://yandex.com/navi/org/200830407398')
     await message.answer(javob, reply_markup=savol_ck, disable_web_page_preview=True)
     # await Man_Woman_State.man_woman.set()
 

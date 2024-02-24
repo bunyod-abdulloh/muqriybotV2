@@ -9,19 +9,24 @@ from states.toplam_states import TortToplam
 from loader import dp, bot
 
 
-async def tort_suhbatlar():
-    text = '1. "Компас - лидерлар академияси"да "Оилавий муносабатлар" мавзусида ташкил этилган суҳбат' \
-           '\n\n2. «Китобхонлик мактаби» лойиҳасининг махсус сони чақирув хатмонаси' \
-           '\n\n3. Радикал атеистлар, феминизм, терроризм, гендер тенглиги ва жоҳил мусулмонлар.' \
-           '\n\n4. Исломда ҳамжиҳатлик тинчлик гарови.' \
-           '\n\n5. "Муносиб бека тайёрлаш ва уларни жамиятга тақдим этиш"' \
-           '\n\n6. СССР тақиқлаган ибодат. Ҳасанхон Яҳё Абдулмажид ва Олимжон Ғуломов билан | "Fikrat"' \
-           '\n\n7. Ислом тўғри ўрганилса, ҳамма замонга мос келади. 13 ёшида қори бўлган қори билан суҳбат.' \
-           '\n\n8. Араб тили ва эски ўзбек ёзувини ўрганишнинг аҳамияти' \
-           '\n\n9. Билганлар билан билмаганлар тенг бўладими? "Нажот Таълим" ўқув марказида бўлиб ўтган суҳбат' \
-           '\n\n10. "Расулуллоҳ - улуғ неъмат" «Шайх Муҳаммад Содиқ Муҳаммад Юсуф» масжидида бўлиб ўтган илмий суҳбат' \
-           '\n\n11. Илм олишнинг ҳаётимиздаги ўрни\n\n12. Аёл киши пул топиши керакми?' \
-           '\n\n13. Устоз Ҳасанхон Яҳё Абдулмажид билан очиқ суҳбат\n\n14. Устозлар билан жонли суҳбат'
+def collection_four():
+    text = ('1. "Kompas - liderlar akademiyasi"da "Oilaviy munosabatlar" mavzusida tashkil etilgan suhbat'
+            '\n2. «Kitobxonlik maktabi» loyihasining maxsus soni chaqiruv xatmonasi'
+            '\n3. Radikal ateistlar, feminizm, terrorizm, gender tengligi va johil musulmonlar'
+            '\n4. Islomda hamjihatlik tinchlik garovi'
+            '\n5. "Munosib beka tayyorlash va ularni jamiyatga taqdim etish"'
+            '\n6. SSSR taqiqlagan ibodat. Hasanxon Yahyo Abdulmajid va Olimjon G‘ulomov bilan | "Fikrat"'
+            '\n7. Islom to‘g‘ri o‘rganilsa, hamma zamonga mos keladi. 13 yoshida qori bo‘lgan qori bilan suhbat'
+            '\n8. Arab tili va eski o‘zbek yozuvini o‘rganishning ahamiyati'
+            '\n9. Bilganlar bilan bilmaganlar teng bo‘ladimi? "Najot Ta’lim" o‘quv markazida bo‘lib o‘tgan suhbat'
+            '\n10. "Rasululloh - ulug‘ ne’mat"'
+            '\n11. Ilm olishning hayotimizdagi o‘rni'
+            '\n12. Ayol kishi pul topishi kerakmi?'
+            '\n13. Ustoz Hasanxon Yahyo Abdulmajid bilan ochiq suhbat'
+            '\n14. Ustozlar bilan jonli suhbat'
+            '\n15. Islom bilan biznes qilganlar'
+            '\n16. Hasanxon Yahyo Abdulmajid bilan psixogenetika mavzusida suhbat'
+            '\n17. Jamiyatimizga qanday jinsiy tarbiya kerak?')
     return text
 
 
@@ -32,7 +37,7 @@ async def jonlifunc(msg: Message, state: FSMContext):
                          reply_markup=await ilmiy_suhbatlar_home_page())
         await state.set_state("ilmsuh")
     elif msg.text == "🎬 Видео":
-        await msg.answer(text=await tort_suhbatlar(), reply_markup=await ilm_suhbat_inkeys(torttoplam=True))
+        await msg.answer(text=collection_four(), reply_markup=await ilm_suhbat_inkeys(torttoplam=True))
         message = await msg.answer('Видео', reply_markup=ReplyKeyboardRemove())
         await message.delete()
         await TortToplam.video_one.set()

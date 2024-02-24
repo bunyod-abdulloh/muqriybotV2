@@ -1,7 +1,9 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from keyboards.default.ilmiysuhbatlar_dk import audio_video_page, ilmiy_suhbatlar_home_page, ilmiy_suhbatlar_menu, ilmiy_suhbatlar_videos, ilmiy_suhbatlar_buttons, ilmiy_suhbatlar_audios
+from keyboards.default.ilmiysuhbatlar_dk import (audio_video_page, ilmiy_suhbatlar_home_page, ilmiy_suhbatlar_menu,
+                                                 ilmiy_suhbatlar_videos, ilmiy_suhbatlar_buttons,
+                                                 ilmiy_suhbatlar_audios)
 from states.ilmiy_suhbatlar_states import ToshShaharSuhbatlar
 from loader import dp, bot
 

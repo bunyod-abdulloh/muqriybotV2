@@ -1,6 +1,5 @@
 import asyncio
 import logging
-import asyncpg
 
 from aiogram import types
 from aiogram.dispatcher import FSMContext
@@ -134,11 +133,6 @@ async def contumum(message: types.Message, state: FSMContext):
                 bool_value=False
             )
 
-    active = 0
-    block = 0
-    count_one = 0
-    count_two = 0
-
 
 @dp.message_handler(is_media_group=True, content_types=['any'], state="mediagroup")
 async def mediagr(message: types.Message, album: List[types.Message], state: FSMContext):
@@ -207,11 +201,6 @@ async def mediagr(message: types.Message, album: List[types.Message], state: FSM
         telegram_id=message.from_user.id,
         bool_value=False
     )
-
-    active = 0
-    block = 0
-    count_one = 0
-    count_two = 0
 
 
 @dp.message_handler(state="mediagroup")
@@ -348,8 +337,3 @@ async def checkyes_no(call: types.CallbackQuery, state: FSMContext):
             text="Habaringizni qayta yuborishingiz mumkin!"
         )
         await state.set_state("elon")
-
-    active = 0
-    block = 0
-    count_one = 0
-    count_two = 0

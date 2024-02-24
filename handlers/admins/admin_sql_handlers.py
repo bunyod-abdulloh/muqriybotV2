@@ -43,7 +43,6 @@ async def add_column_admin_handler(message: types.Message, state: FSMContext):
         await message.answer(
             text=f"Jami {c} ta foydalanuvchi ma'lumotlar omboridan o'chirildi!"
         )
-        c = 0
     elif message.text == "🔙 Ortga":
         await message.answer(text=message.text,
                              reply_markup=adm_adm)

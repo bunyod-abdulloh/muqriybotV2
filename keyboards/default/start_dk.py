@@ -1,6 +1,5 @@
 from aiogram.types import ReplyKeyboardMarkup
 
-
 main_keyboard = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 main_keyboard.row("🎧 \"Қуръони карим\" тиловати \n(ўттиз пора)")
 main_keyboard.row("📖 Қуръони карим", "📌 Таровеҳ намози 1444")
@@ -24,3 +23,12 @@ support_keys.row('Аёллар', 'Эркаклар')
 
 bosh_menyu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 bosh_menyu.row('🏡 Бош саҳифа')
+
+
+def main_buttons():
+    buttons = ReplyKeyboardMarkup(resize_keyboard=True)
+    buttons.row("Qur'oni Karim", "Siyrat")
+    buttons.row("Ramazon", "Ilmiy suhbatlar")
+    buttons.row("Tahorat, namoz va zikrlar")
+    buttons.row("❓ Savol yuborish")
+    return buttons

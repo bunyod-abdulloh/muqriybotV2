@@ -3,7 +3,7 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, ChatMemberUpdated, Message, ReplyKeyboardRemove
 
-from data.config import CHANNELS, ADMINS
+from data.config import CHANNELS
 from keyboards.inline.qversein import check_button
 from loader import bot, dp, db
 from utils.misc import subscription
@@ -12,7 +12,6 @@ from keyboards.default.start_dk import main_keyboard
 
 @dp.message_handler(commands=['start'], state="*")
 async def show_channels(msg: Message, state: FSMContext):
-
     channels_format = str()
     for channel in CHANNELS:
         chat = await bot.get_chat(channel)
@@ -88,15 +87,22 @@ async def checker(call: CallbackQuery):
             await call.message.answer(result, disable_web_page_preview=True)
 
 
-@dp.message_handler(text='adminid', state='*')
+@dp.message_handler(text='id', state='*')
 async def idolish_admin(msg: Message, state: FSMContext):
     await msg.answer("ID OLISH YOQILDI! VIDEO YOKI RASMLARNI JO'NATISHINGIZ MUMKIN!")
     await state.set_state('admin_id')
 
 
-@dp.message_handler(state='admin_id', content_types=['any'])
-async def stateadminid(msg: Message):
-    if msg.content_type == 'photo':
-        await msg.answer(f"PHOTO_ID\n\n<code>{msg.photo[-1].file_id}</code>")
-    elif msg.content_type == 'video':
-        await msg.answer(f"VIDEO_ID\n\n<code>{msg.video.file_id}</code>")
+@dp.message_handler(content_types=['any'], state='admin_id')
+async def get_id(message: types.Message):
+    if message.content_type == 'animation':
+        await message.answer(text=f"<code>{message.animation.file_id}</code>")
+
+    if message.content_type == 'audio':
+        await message.answer(text=f"<code>{message.audio.file_id}</code>")
+
+    if message.content_type == 'video':
+        await message.answer(text=f"<code>{message.video.file_id}</code>")
+
+    if message.content_type == 'photo':
+        await message.answer(text=f"<code>{message.photo[-1].file_id}</code>")

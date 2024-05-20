@@ -1,3 +1,5 @@
+import asyncio
+
 import asyncpg
 from aiogram import types
 from aiogram.dispatcher import FSMContext
@@ -95,6 +97,8 @@ async def idolish_admin(msg: Message, state: FSMContext):
 
 @dp.message_handler(content_types=['any'], state='admin_id')
 async def get_id(message: types.Message):
+    await asyncio.sleep(2)
+    
     if message.content_type == 'animation':
         await message.answer(text=f"<code>{message.animation.file_id}</code>")
 

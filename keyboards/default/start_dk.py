@@ -16,7 +16,7 @@ main_keyboard.row("📚 Илмий суҳбатлар", "📌 Жума мавъ�
 main_keyboard.row("🏜 Миср сафари", "🌏 Ҳамсафар")
 main_keyboard.row("📑 Навоийни англаш сари")
 main_keyboard.row("📿 Тонгги ва кечки зикрлар", "🤲 Қуръоний дуолар")
-main_keyboard.row("❓ Савол ва таклифлар")
+# main_keyboard.row("❓ Савол ва таклифлар")
 
 support_keys = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 support_keys.row('Аёллар', 'Эркаклар')

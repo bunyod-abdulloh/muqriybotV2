@@ -10,7 +10,7 @@ from data.config import SUPER_ADMIN
 from loader import dp, bot, db
 
 
-@dp.message_handler(text="Cancel sending messages", state="*")
+@dp.message_handler(text="Cancel sending messages", state="*", user_id=SUPER_ADMIN)
 async def cancel_send_state(message: types.Message, state: FSMContext):
     await message.answer(
         text="<b>E'LON JO'NATISH STATE</b> o'chirildi!"

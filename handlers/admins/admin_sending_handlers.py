@@ -45,7 +45,7 @@ async def admin_sendmes_state(message: types.Message, state: FSMContext):
     )
 
 
-@dp.message_handler(content_types=['text'], state="elon", user_id=SUPER_ADMIN)
+@dp.message_handler(state="elon", user_id=SUPER_ADMIN)
 async def elonj(message: types.Message, state: FSMContext):
     matn = message.text
     await message.answer(

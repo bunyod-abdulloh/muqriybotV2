@@ -129,10 +129,10 @@ async def deleteblockedusers(message: types.Message):
 
     c = 0
     for user in blocked_users:
-        if user[3] is not None:
+        if user[2]:
             c += 1
             await db.delete_user_tgid(
-                tgid=user[3]
+                tgid=user[1]
             )
     await message.answer(
         text=f"Jami {c} ta foydalanuvchi ma'lumotlar omboridan o'chirildi!"

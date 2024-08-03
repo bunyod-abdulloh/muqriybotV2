@@ -7,4 +7,4 @@ adm_adm = ReplyKeyboardMarkup(
 
 adm_adm.row("Sending messages", "Cancel sending messages")
 adm_adm.row("Count_all_users", "Delete blocked users")
-adm_adm.add("Sql buttons", "🏡 Бош саҳифа")
+adm_adm.add("🏡 Бош саҳифа")

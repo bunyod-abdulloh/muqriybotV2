@@ -82,6 +82,13 @@ async def checker(call: CallbackQuery):
         if status:
             result += f"<b>{channel.title}</b> каналимизга обуна бўлгансиз!\n\n"
             await call.message.answer(result, reply_markup=main_keyboard, disable_web_page_preview=True)
+            user_id = call.from_user.id
+            user_in_db = await db.select_user(
+                telegram_id=user_id
+            )
+            if user_in_db is None:
+                await db.add_user(telegram_id=user_id)
+
         else:
             invite_link = await channel.export_invite_link()
             result += (f"Сиз, 👉 <a href='{invite_link}'>{channel.title}</a>\nканалига обуна бўлмагансиз"

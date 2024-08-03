@@ -10,6 +10,14 @@ from data.config import SUPER_ADMIN
 from loader import dp, bot, db
 
 
+@dp.message_handler(text="Cancel sending messages")
+async def cancel_send_state(message: types.Message, state: FSMContext):
+    await message.answer(
+        text="<b>E'LON JO'NATISH STATE</b> o'chirildi!"
+    )
+    await state.finish()
+
+
 @dp.message_handler(text=['/admin'], user_id=SUPER_ADMIN, state="*")
 async def buttons(message: types.Message):
     admin = await db.select_user(
@@ -39,26 +47,19 @@ async def admin_sendmes_state(message: types.Message, state: FSMContext):
 
 @dp.message_handler(content_types=['text'], state="elon", user_id=SUPER_ADMIN)
 async def elonj(message: types.Message, state: FSMContext):
-    if message.text == "Cancel sending messages":
-        await message.answer(
-            text="<b>E'LON JO'NATISH STATE</b> o'chirildi!"
-        )
-        await state.finish()
-
-    elif message.text:
-        matn = message.text
-        await message.answer(
-            text="Yuboradigan habaringizni tekshirdingizmi?"
-                 "\n\nOgoh bo'ling, habaringiz ko'pchilikka boradi!"
-                 "\n\nHabarni yuborasizmi?",
-            reply_markup=yes_no
-        )
-        await state.update_data(
-            text=matn
-        )
-        await state.set_state(
-            state="yes_no"
-        )
+    matn = message.text
+    await message.answer(
+        text="Yuboradigan habaringizni tekshirdingizmi?"
+             "\n\nOgoh bo'ling, habaringiz ko'pchilikka boradi!"
+             "\n\nHabarni yuborasizmi?",
+        reply_markup=yes_no
+    )
+    await state.update_data(
+        text=matn
+    )
+    await state.set_state(
+        state="yes_no"
+    )
 
 
 @dp.callback_query_handler(state="yes_no")

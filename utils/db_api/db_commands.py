@@ -46,7 +46,8 @@ class Database:
         CREATE TABLE IF NOT EXISTS Users (
         id SERIAL PRIMARY KEY,
         telegram_id BIGINT NOT NULL UNIQUE,
-        block BIGINT NULL
+        block BIGINT NULL,
+        admin BOOLEAN DEFAULT FALSE
         );
         """
         await self.execute(sql, execute=True)

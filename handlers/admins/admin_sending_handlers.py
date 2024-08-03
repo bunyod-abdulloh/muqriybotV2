@@ -77,7 +77,7 @@ async def checkyes_no(call: types.CallbackQuery, state: FSMContext):
             telegram_id=call.from_user.id,
             bool_value=True
         )
-        await call.message.edit_text(
+        await call.message.answer(
             text=f"Habar yuborilganligi haqidagi to'liq ma'lumot tez orada yuboriladi!",
             reply_markup=main_keyboard
         )

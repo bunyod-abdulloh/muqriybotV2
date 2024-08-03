@@ -17,7 +17,7 @@ async def buttons(message: types.Message):
     admin = await db.select_user(
         telegram_id=message.from_user.id
     )
-    if admin[2] is True:
+    if admin[3] is True:
         await message.answer(
             text="Jarayon tugatilmadi!",
             reply_markup=main_keyboard

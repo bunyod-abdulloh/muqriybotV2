@@ -9,11 +9,11 @@ from keyboards.default.adminkeys import adm_adm
 from keyboards.default.start_dk import main_keyboard
 from keyboards.inline.elon_keys import yes_no
 
-from data.config import ADMINS
+from data.config import SUPER_ADMIN
 from loader import dp, bot, db
 
 
-@dp.message_handler(text=['/admins'], user_id=ADMINS, state="*")
+@dp.message_handler(text=['/admins'], user_id=SUPER_ADMIN, state="*")
 async def buttons(message: types.Message):
     admin = await db.select_user(
         telegram_id=message.from_user.id
@@ -30,7 +30,7 @@ async def buttons(message: types.Message):
         )
 
 
-@dp.message_handler(text='Forward ON', user_id=ADMINS)
+@dp.message_handler(text='Forward ON', user_id=SUPER_ADMIN)
 async def admin_forward_state(message: types.Message, state: FSMContext):
     await message.answer(
         text=f"<b>FORWARD STATE</b> yoqildi!"
@@ -40,7 +40,7 @@ async def admin_forward_state(message: types.Message, state: FSMContext):
     )
 
 
-@dp.message_handler(text='MediaGroup ON', user_id=ADMINS)
+@dp.message_handler(text='MediaGroup ON', user_id=SUPER_ADMIN)
 async def admin_mediagr_state(message: types.Message, state: FSMContext):
     await message.answer(
         text=f"<b>MEDIA GROUP STATE</b> yoqildi!"
@@ -50,7 +50,7 @@ async def admin_mediagr_state(message: types.Message, state: FSMContext):
     )
 
 
-@dp.message_handler(text='ID ON', user_id=ADMINS)
+@dp.message_handler(text='ID ON', user_id=SUPER_ADMIN)
 async def admin_id_state(message: types.Message, state: FSMContext):
     await message.answer(
         text=f"<b>ID OLISH STATE</b> yoqildi!"
@@ -60,7 +60,7 @@ async def admin_id_state(message: types.Message, state: FSMContext):
     )
 
 
-@dp.message_handler(text='Sending messages', user_id=ADMINS)
+@dp.message_handler(text='Sending messages', user_id=SUPER_ADMIN)
 async def admin_sendmes_state(message: types.Message, state: FSMContext):
     await message.answer(
         text=f"<b>E'LON JO'NATISH STATE</b> yoqildi!"
@@ -70,7 +70,7 @@ async def admin_sendmes_state(message: types.Message, state: FSMContext):
     )
 
 
-@dp.message_handler(content_types=['any'], user_id=ADMINS, state="forw")
+@dp.message_handler(content_types=['any'], user_id=SUPER_ADMIN, state="forw")
 async def contumum(message: types.Message, state: FSMContext):
     content_type = ["audio", "video", "voice", "document", "photo", "text"]
 
@@ -109,7 +109,7 @@ async def contumum(message: types.Message, state: FSMContext):
                     block += 1
                     await db.update_blocked_user(
                         telegram_id=user[1],
-                        blocked_user=user[1]
+                        blocked_id=user[1]
                     )
                     continue
 
@@ -177,7 +177,7 @@ async def mediagr(message: types.Message, album: List[types.Message], state: FSM
             block += 1
             await db.update_blocked_user(
                 telegram_id=user[1],
-                blocked_user=user[1]
+                blocked_id=user[1]
             )
             continue
 
@@ -212,7 +212,7 @@ async def mediagryopish(message: types.Message, state: FSMContext):
         await state.finish()
 
 
-@dp.message_handler(content_types=['any'], user_id=ADMINS, state="idolish")
+@dp.message_handler(content_types=['any'], user_id=SUPER_ADMIN, state="idolish")
 async def idvideo(message: types.Message, state: FSMContext):
     if message.video:
         await message.answer(
@@ -253,7 +253,7 @@ async def idvideo(message: types.Message, state: FSMContext):
         )
 
 
-@dp.message_handler(content_types=['text'], state="elon", user_id=ADMINS)
+@dp.message_handler(content_types=['text'], state="elon", user_id=SUPER_ADMIN)
 async def elonj(message: types.Message, state: FSMContext):
     if message.text == "Cancel sending messages":
         await message.answer(
@@ -309,7 +309,7 @@ async def checkyes_no(call: types.CallbackQuery, state: FSMContext):
                 block += 1
                 await db.update_blocked_user(
                     telegram_id=user[1],
-                    blocked_user=user[1]
+                    blocked_id=user[1]
                 )
                 continue
 

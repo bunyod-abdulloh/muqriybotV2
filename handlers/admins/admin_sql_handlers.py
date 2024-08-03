@@ -1,7 +1,7 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from data.config import ADMINS
+from data.config import SUPER_ADMIN
 from keyboards.default.adminkeys import adm_adm, admin_sql_buttons
 from loader import dp, db
 from states.admin_states import AdminSqlButtons
@@ -15,22 +15,7 @@ async def admin_sql_btn(message: types.Message):
 
 @dp.message_handler(state=AdminSqlButtons.main)
 async def add_column_admin_handler(message: types.Message, state: FSMContext):
-    if message.text == "Add column admin":
-        await db.alter_add_column_admin()
-        await message.answer(
-            text="Admin ustuni ma'lumotlar omboriga qo'shildi"
-        )
-    elif message.text == "Add column blocks":
-        await db.alter_add_column_blocks()
-        await message.answer(
-            text="Blocks ustuni qo'shildi!"
-        )
-    elif message.text == "Drop column blocks":
-        await db.alter_drop_column_blocks()
-        await message.answer(
-            text="Blocks ustuni o'chirildi!"
-        )
-    elif message.text == "Delete blocked users":
+    if message.text == "Delete blocked users":
         blocked_users = await db.select_all_users()
 
         c = 0
@@ -49,7 +34,7 @@ async def add_column_admin_handler(message: types.Message, state: FSMContext):
         await state.finish()
 
 
-@dp.message_handler(text="Count_all_users", user_id=ADMINS, state="*")
+@dp.message_handler(text="Count_all_users", user_id=SUPER_ADMIN, state="*")
 async def count_users_handler(message: types.Message):
     count = await db.count_users()
     await message.answer(
@@ -57,7 +42,7 @@ async def count_users_handler(message: types.Message):
     )
 
 
-@dp.message_handler(text="Count_blocked_users", user_id=ADMINS, state="*")
+@dp.message_handler(text="Count_blocked_users", user_id=SUPER_ADMIN, state="*")
 async def count_blocked_users_handler(message: types.Message):
     blocked = await db.count_blocked_users()
     await message.answer(

@@ -4,9 +4,7 @@ env = Env()
 env.read_env()
 
 BOT_TOKEN = env.str("BOT_TOKEN")
-ADMINS = env.str("ADMINS")
-MAN_GROUP = env.str("MAN_GROUP")
-WOMAN_GROUP = env.str("WOMAN_GROUP")
+SUPER_ADMIN = env.str("SUPER_ADMIN")
 IP = env.str("IP")
 CHANNELS = env.list("CHANNELS")
 

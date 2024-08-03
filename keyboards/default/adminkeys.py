@@ -13,6 +13,5 @@ adm_adm.add("Sql buttons", "🏡 Бош саҳифа")
 
 admin_sql_buttons = ReplyKeyboardMarkup(resize_keyboard=True,
                                         one_time_keyboard=True)
-admin_sql_buttons.row("Add column blocks", "Drop column blocks")
 admin_sql_buttons.add("Delete blocked users")
 admin_sql_buttons.row("🔙 Ortga", "🏡 Бош саҳифа")

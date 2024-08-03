@@ -9,15 +9,6 @@ from handlers.users.help import AlbumMiddleware
 async def on_startup(dispatcher):
     await db.create()
     await db.create_table_users()
-    # await sdb.create()
-    # await sdb.drop_table_bot_answer()
-    # await sdb.drop_table_woman_sos()
-    # await sdb.drop_table_man_sos()
-    # await sdb.create_table_man_sos()
-    # await sdb.create_table_woman()
-    # await sdb.create_table_bot_answer()
-    # await sdb.create_table_admins()
-
     await set_default_commands(dispatcher)
     await on_startup_notify(dispatcher)
 

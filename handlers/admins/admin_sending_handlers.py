@@ -18,7 +18,7 @@ async def cancel_send_state(message: types.Message, state: FSMContext):
     await state.finish()
 
 
-@dp.message_handler(text=['/admin'], user_id=SUPER_ADMIN, state="*")
+@dp.message_handler(text=['/admins'], user_id=SUPER_ADMIN, state="*")
 async def admin_main_handler(message: types.Message):
     admin = await db.select_user(
         telegram_id=message.from_user.id

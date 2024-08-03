@@ -2,8 +2,6 @@ import asyncio
 
 from aiogram import types
 from aiogram.dispatcher import FSMContext
-from typing import List
-
 from keyboards.default.adminkeys import adm_adm
 from keyboards.default.start_dk import main_keyboard
 from keyboards.inline.elon_keys import yes_no
@@ -123,3 +121,27 @@ async def checkyes_no(call: types.CallbackQuery, state: FSMContext):
             text="Habaringizni qayta yuborishingiz mumkin!"
         )
         await state.set_state("elon")
+
+
+@dp.message_handler(text="Delete blocked users", user_id=SUPER_ADMIN)
+async def deleteblockedusers(message: types.Message):
+    blocked_users = await db.select_all_users()
+
+    c = 0
+    for user in blocked_users:
+        if user[3] is not None:
+            c += 1
+            await db.delete_user_tgid(
+                tgid=user[3]
+            )
+    await message.answer(
+        text=f"Jami {c} ta foydalanuvchi ma'lumotlar omboridan o'chirildi!"
+    )
+
+
+@dp.message_handler(text="Count_all_users", user_id=SUPER_ADMIN, state="*")
+async def count_users_handler(message: types.Message):
+    count = await db.count_users()
+    await message.answer(
+        text=f"Umumiy foydalanuvchilar soni: {count} ta"
+    )

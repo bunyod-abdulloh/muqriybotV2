@@ -47,7 +47,7 @@ class Database:
         id SERIAL PRIMARY KEY,
         telegram_id BIGINT NOT NULL UNIQUE,
         block BIGINT NULL,
-        admin BOOLEAN DEFAULT FALSE
+        admins BOOLEAN DEFAULT FALSE
         );
         """
         await self.execute(sql, execute=True)
@@ -57,7 +57,7 @@ class Database:
         return await self.execute(sql, telegram_id, fetchrow=True)
 
     async def update_admin(self, telegram_id, bool_value):
-        sql = f"UPDATE Users SET admin='{bool_value}' WHERE telegram_id='{telegram_id}'"
+        sql = f"UPDATE Users SET admins='{bool_value}' WHERE telegram_id='{telegram_id}'"
         return await self.execute(sql, execute=True)
 
     async def update_blocked_user(self, telegram_id, blocked_id):

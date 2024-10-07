@@ -40,10 +40,9 @@ async def members(msg: ChatMemberUpdated):
 
         elif msg.new_chat_member.status == 'left':
             channels_format = str()
-            for channel in CHANNELS:
-                chat = await bot.get_chat(channel)
-                invite_link = await chat.export_invite_link()
-                channels_format += f" 👉 <a href='{invite_link}'>{chat.title}</a>\n"
+            chat = await bot.get_chat(CHANNELS)
+            invite_link = await chat.export_invite_link()
+            channels_format += f" 👉 <a href='{invite_link}'>{chat.title}</a>\n"
 
             await bot.send_message(chat_id=user_id,
                                    text=f'Сиз, {channels_format}каналимиздан чиқиб кетдингиз!'
@@ -74,25 +73,25 @@ async def boshmenyu_handler(message: types.Message, state: FSMContext):
 async def checker(call: CallbackQuery):
     await call.answer()
     result = str()
-    for channel in CHANNELS:
-        status = await subscription.check(user_id=call.from_user.id,
-                                          channel=channel)
-        channel = await bot.get_chat(channel)
-        if status:
-            result += f"<b>{channel.title}</b> каналимизга обуна бўлгансиз!\n\n"
-            await call.message.answer(result, reply_markup=main_keyboard, disable_web_page_preview=True)
-            user_id = call.from_user.id
-            user_in_db = await db.select_user(
-                telegram_id=user_id
-            )
-            if user_in_db is None:
-                await db.add_user(telegram_id=user_id)
 
-        else:
-            invite_link = await channel.export_invite_link()
-            result += (f"Сиз, 👉 <a href='{invite_link}'>{channel.title}</a>\nканалига обуна бўлмагансиз"
-                       f"\n<a href='{invite_link}'>Обуна бўлиш</a>")
-            await call.message.answer(result, disable_web_page_preview=True)
+    status = await subscription.check(user_id=call.from_user.id,
+                                      channel=CHANNELS)
+    channel = await bot.get_chat(CHANNELS)
+    if status:
+        result += f"<b>{channel.title}</b> каналимизга обуна бўлгансиз!\n\n"
+        await call.message.answer(result, reply_markup=main_keyboard, disable_web_page_preview=True)
+        user_id = call.from_user.id
+        user_in_db = await db.select_user(
+            telegram_id=user_id
+        )
+        if user_in_db is None:
+            await db.add_user(telegram_id=user_id)
+
+    else:
+        invite_link = await channel.export_invite_link()
+        result += (f"Сиз, 👉 <a href='{invite_link}'>{channel.title}</a>\nканалига обуна бўлмагансиз"
+                   f"\n<a href='{invite_link}'>Обуна бўлиш</a>")
+        await call.message.answer(result, disable_web_page_preview=True)
 
 
 @dp.message_handler(text='id', state='*')

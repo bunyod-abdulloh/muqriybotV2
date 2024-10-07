@@ -20,7 +20,7 @@ async def show_channels(msg: Message, state: FSMContext):
     channels_format += f"👉 <a href='{invite_link}'>{chat.title}</a>\n"
     await msg.answer("Ассалому алайкум!\nБу бот орқали Сиз Ҳасанхон Яҳё Абдулмажид қори дарсликларини аудио ва видео "
                      "шаклда кўришингиз ва эшитишингиз мумкин.", reply_markup=ReplyKeyboardRemove())
-    await msg.answer(f"Ботни ишлатиш учун қуйидаги каналимизга обуна бўлинг:\n"
+    await msg.answer(f"Ботни ишлатиш учун қуйидаги каналимизга обуна бўлинг\n"
                      f"{channels_format}", reply_markup=check_button, disable_web_page_preview=True)
     await state.finish()
 

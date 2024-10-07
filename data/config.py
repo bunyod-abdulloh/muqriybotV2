@@ -6,7 +6,7 @@ env.read_env()
 BOT_TOKEN = env.str("BOT_TOKEN")
 SUPER_ADMIN = env.str("SUPER_ADMIN")
 IP = env.str("IP")
-CHANNELS = env.list("CHANNELS")
+CHANNELS = env.str("CHANNELS")
 
 DB_USER = env.str("DB_USER")
 DB_PASS = env.str("DB_PASS")

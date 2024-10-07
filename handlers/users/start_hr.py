@@ -15,10 +15,9 @@ from keyboards.default.start_dk import main_keyboard
 @dp.message_handler(commands=['start'], state="*")
 async def show_channels(msg: Message, state: FSMContext):
     channels_format = str()
-    for channel in CHANNELS:
-        chat = await bot.get_chat(channel)
-        invite_link = await chat.export_invite_link()
-        channels_format += f"👉 <a href='{invite_link}'>{chat.title}</a>\n"
+    chat = await bot.get_chat(CHANNELS)
+    invite_link = await chat.export_invite_link()
+    channels_format += f"👉 <a href='{invite_link}'>{chat.title}</a>\n"
     await msg.answer("Ассалому алайкум!\nБу бот орқали Сиз Ҳасанхон Яҳё Абдулмажид қори дарсликларини аудио ва видео "
                      "шаклда кўришингиз ва эшитишингиз мумкин.", reply_markup=ReplyKeyboardRemove())
     await msg.answer(f"Ботни ишлатиш учун қуйидаги каналимизга обуна бўлинг:\n"

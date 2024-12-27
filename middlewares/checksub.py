@@ -3,7 +3,7 @@ from aiogram import types
 from aiogram.dispatcher.handler import CancelHandler
 from aiogram.dispatcher.middlewares import BaseMiddleware
 
-from data.config import CHANNELS
+from data.config import CHANNEL_ID
 from utils.misc import subscription
 from loader import bot
 
@@ -23,7 +23,7 @@ class BigBrother(BaseMiddleware):
         logging.info(user)
         result = "Ботдан фойдаланиш учун қуйидаги каналимизга обуна бўлинг:\n "
         final_status = True
-        for channel in CHANNELS:
+        for channel in CHANNEL_ID:
             status = await subscription.check(user_id=user,
                                               channel=channel)
             final_status *= status

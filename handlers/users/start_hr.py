@@ -5,7 +5,7 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, ChatMemberUpdated, Message, ReplyKeyboardRemove
 
-from data.config import CHANNELS
+from data.config import CHANNEL_ID, CHANNEL_LINK, CHANNEL_TITLE
 from keyboards.inline.qversein import check_button
 from loader import bot, dp, db
 from utils.misc import subscription
@@ -13,15 +13,19 @@ from keyboards.default.start_dk import main_keyboard
 
 
 @dp.message_handler(commands=['start'], state="*")
-async def show_channels(msg: Message, state: FSMContext):
-    channels_format = str()
-    chat = await bot.get_chat(CHANNELS)
-    invite_link = await chat.export_invite_link()
-    channels_format += f"👉 <a href='{invite_link}'>{chat.title}</a>\n"
-    await msg.answer("Ассалому алайкум!\nБу бот орқали Сиз Ҳасанхон Яҳё Абдулмажид қори дарсликларини аудио ва видео "
-                     "шаклда кўришингиз ва эшитишингиз мумкин.", reply_markup=ReplyKeyboardRemove())
-    await msg.answer(f"Ботни ишлатиш учун қуйидаги каналимизга обуна бўлинг\n"
-                     f"{channels_format}", reply_markup=check_button, disable_web_page_preview=True)
+async def show_channels(message: Message, state: FSMContext):
+    try:
+        await db.add_user(message.from_user.id)
+    except asyncpg.exceptions.UniqueViolationError:
+        pass
+    else:
+        pass
+    channels_format = f"👉 <a href='{CHANNEL_LINK}'>{CHANNEL_TITLE}</a>\n"
+    await message.answer(
+        "Ассалому алайкум!\nБу бот орқали Сиз Ҳасанхон Яҳё Абдулмажид қори дарсликларини аудио ва видео "
+        "шаклда кўришингиз ва эшитишингиз мумкин.", reply_markup=ReplyKeyboardRemove())
+    await message.answer(f"Ботни ишлатиш учун қуйидаги каналимизга обуна бўлинг\n"
+                         f"{channels_format}", reply_markup=check_button, disable_web_page_preview=True)
     await state.finish()
 
 
@@ -40,7 +44,7 @@ async def members(msg: ChatMemberUpdated):
 
         elif msg.new_chat_member.status == 'left':
             channels_format = str()
-            chat = await bot.get_chat(CHANNELS)
+            chat = await bot.get_chat(CHANNEL_ID)
             invite_link = await chat.export_invite_link()
             channels_format += f" 👉 <a href='{invite_link}'>{chat.title}</a>\n"
 
@@ -55,55 +59,41 @@ async def members(msg: ChatMemberUpdated):
 
 @dp.message_handler(text="🏡 Бош саҳифа", state="*")
 async def boshmenyu_handler(message: types.Message, state: FSMContext):
-    user_id = message.from_user.id
-    user_in_db = await db.select_user(
-        telegram_id=user_id
-    )
-
     await message.answer(
         text="🏡 Бош саҳифа",
         reply_markup=main_keyboard
     )
-    if user_in_db is None:
-        await db.add_user(telegram_id=message.from_user.id)
+
     await state.finish()
 
 
 @dp.callback_query_handler(text="check_subs")
 async def checker(call: CallbackQuery):
     await call.answer()
-    result = str()
 
     status = await subscription.check(user_id=call.from_user.id,
-                                      channel=CHANNELS)
-    channel = await bot.get_chat(CHANNELS)
+                                      channel=CHANNEL_ID)
+
     if status:
-        result += f"<b>{channel.title}</b> каналимизга обуна бўлгансиз!\n\n"
+        result = f"<b>{CHANNEL_TITLE}</b> каналимизга обуна бўлгансиз!\n\n"
         await call.message.answer(result, reply_markup=main_keyboard, disable_web_page_preview=True)
-        user_id = call.from_user.id
-        user_in_db = await db.select_user(
-            telegram_id=user_id
-        )
-        if user_in_db is None:
-            await db.add_user(telegram_id=user_id)
 
     else:
-        invite_link = await channel.export_invite_link()
-        result += (f"Сиз, 👉 <a href='{invite_link}'>{channel.title}</a>\nканалига обуна бўлмагансиз"
-                   f"\n<a href='{invite_link}'>Обуна бўлиш</a>")
+        result = (f"Сиз, 👉 <a href='{CHANNEL_LINK}'>{CHANNEL_TITLE}</a>\nканалига обуна бўлмагансиз"
+                  f"\n<a href='{CHANNEL_LINK}'>Обуна бўлиш</a>")
         await call.message.answer(result, disable_web_page_preview=True)
 
 
 @dp.message_handler(text='id', state='*')
-async def idolish_admin(msg: Message, state: FSMContext):
-    await msg.answer("ID OLISH YOQILDI! VIDEO YOKI RASMLARNI JO'NATISHINGIZ MUMKIN!")
+async def idolish_admin(message: Message, state: FSMContext):
+    await message.answer("ID OLISH YOQILDI! VIDEO YOKI RASMLARNI JO'NATISHINGIZ MUMKIN!")
     await state.set_state('admin_id')
 
 
 @dp.message_handler(content_types=['any'], state='admin_id')
 async def get_id(message: types.Message):
     await asyncio.sleep(2)
-    
+
     if message.content_type == 'animation':
         await message.answer(text=f"<code>{message.animation.file_id}</code>")
 

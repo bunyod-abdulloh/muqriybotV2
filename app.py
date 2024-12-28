@@ -1,3 +1,4 @@
+import middlewares, filters, handlers
 from aiogram import executor
 
 from loader import dp, db

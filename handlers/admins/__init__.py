@@ -1,1 +1,1 @@
-from . import admin_sending_handlers
+from . import main_page

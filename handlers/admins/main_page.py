@@ -41,8 +41,9 @@ async def admin_sendmes_state(message: types.Message, state: FSMContext):
         )
 
 
-@dp.message_handler(state="elon", user_id=SUPER_ADMIN)
+@dp.message_handler(state="elon", user_id=SUPER_ADMIN, content_types=types.ContentTypes.ANY)
 async def elonj(message: types.Message, state: FSMContext):
+    await state.finish()
     await db.update_status_true()
     all_users = await db.select_all_users()
     success_count, failed_count = 0, 0
@@ -54,14 +55,14 @@ async def elonj(message: types.Message, state: FSMContext):
             failed_count += 1
             await db.delete_user_tgid(user['telegram_id'])
         else:
-            pass
+            failed_count += 1
+            await db.delete_user_tgid(user['telegram_id'])
         if index % 1500 == 0:
             await asyncio.sleep(30)
         await asyncio.sleep(0.05)
     await message.answer(
         f"Xabar {success_count} ta foydalanuvchiga yuborildi!"
     )
-    await state.finish()
     await db.update_status_false()
 
 
@@ -73,16 +74,16 @@ async def count_users_handler(message: types.Message):
     )
 
 
-@dp.message_handler(F.text == "add_users", user_id=SUPER_ADMIN)
-async def add_users(message: types.Message):
-    count = 0
-    for user in users_list:
-        try:
-            count += 1
-            await db.add_user(telegram_id=user)
-        except asyncpg.exceptions.UniqueViolationError:
-            pass
-        else:
-            pass
-
-    await message.answer(text=f"{count} ta foydalanuvchi qo'shildi!")
+# @dp.message_handler(F.text == "add_users", user_id=SUPER_ADMIN)
+# async def add_users(message: types.Message):
+#     count = 0
+#     for user in users_list:
+#         try:
+#             count += 1
+#             await db.add_user(telegram_id=user)
+#         except asyncpg.exceptions.UniqueViolationError:
+#             pass
+#         else:
+#             pass
+#
+#     await message.answer(text=f"{count} ta foydalanuvchi qo'shildi!")

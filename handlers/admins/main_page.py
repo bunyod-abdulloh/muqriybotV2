@@ -1,6 +1,7 @@
 import asyncio
 
 import aiogram
+import asyncpg
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
@@ -76,6 +77,12 @@ async def count_users_handler(message: types.Message):
 async def add_users(message: types.Message):
     count = 0
     for user in users_list:
-        count += 1
-        await db.add_user(telegram_id=user)
+        try:
+            count += 1
+            await db.add_user(telegram_id=user)
+        except asyncpg.exceptions.UniqueViolationError:
+            pass
+        else:
+            pass
+
     await message.answer(text=f"{count} ta foydalanuvchi qo'shildi!")

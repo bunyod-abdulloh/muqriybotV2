@@ -14,6 +14,7 @@ from keyboards.default.start_dk import main_keyboard
 
 @dp.message_handler(commands=['start'], state="*")
 async def show_channels(message: Message, state: FSMContext):
+    await message.answer(message.text)
     try:
         await db.add_user(message.from_user.id)
     except asyncpg.exceptions.UniqueViolationError:

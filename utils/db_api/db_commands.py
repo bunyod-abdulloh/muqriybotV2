@@ -41,28 +41,28 @@ class Database:
                     result = await connection.execute(command, *args)
                 return result
 
-    async def create_table_users(self):
-        sql = """
-        CREATE TABLE IF NOT EXISTS Users (
-        id SERIAL PRIMARY KEY,
-        telegram_id BIGINT NOT NULL UNIQUE,
-        block BIGINT NULL,
-        admins BOOLEAN DEFAULT FALSE
-        );
-        """
-        await self.execute(sql, execute=True)
+    async def create_tables(self):
+        queries = [
+            """
+            CREATE TABLE IF NOT EXISTS Users (
+                id SERIAL PRIMARY KEY,
+                telegram_id BIGINT NOT NULL UNIQUE        
+            );
+            """,
+            """
+            CREATE TABLE IF NOT EXISTS admin(
+                id SERIAL PRIMARY KEY,
+                status BOOLEAN DEFAULT FALSE
+            );
+            """
+        ]
+        for query in queries:
+            await self.execute(query, execute=True)
 
+    # ==================== USERS ====================
     async def add_user(self, telegram_id):
-        sql = "INSERT INTO Users (telegram_id) VALUES($1) returning *"
+        sql = "INSERT INTO Users (telegram_id) VALUES($1)"
         return await self.execute(sql, telegram_id, fetchrow=True)
-
-    async def update_admin(self, telegram_id, bool_value):
-        sql = f"UPDATE Users SET admins='{bool_value}' WHERE telegram_id='{telegram_id}'"
-        return await self.execute(sql, execute=True)
-
-    async def update_blocked_user(self, telegram_id, blocked_id):
-        sql = f"UPDATE Users SET block='{blocked_id}' WHERE telegram_id='{telegram_id}'"
-        return await self.execute(sql, execute=True)
 
     async def select_all_users(self):
         sql = "SELECT * FROM Users"
@@ -76,15 +76,25 @@ class Database:
         sql = "SELECT COUNT(*) FROM Users"
         return await self.execute(sql, fetchval=True)
 
-    async def count_blocked_users(self):
-        sql = "SELECT COUNT(*) FROM Users WHERE blocks IS NOT NULL"
-        return await self.execute(sql, fetchval=True)
-
     async def delete_user_tgid(self, tgid):
         await self.execute("DELETE FROM Users WHERE telegram_id=$1", tgid, execute=True)
 
-    async def delete_users(self):
-        await self.execute("DELETE FROM Users", execute=True)
-
     async def drop_table_users(self):
         await self.execute("DROP TABLE Users", execute=True)
+
+    # ==================== ADMIN ====================
+    async def add_status(self):
+        sql = "INSERT INTO admin (status) VALUES(FALSE)"
+        return await self.execute(sql, fetchrow=True)
+
+    async def select_status(self):
+        sql = "SELECT status FROM admin"
+        return await self.execute(sql, fetchval=True)
+
+    async def update_status_true(self):
+        sql = f"UPDATE admin SET status=TRUE"
+        return await self.execute(sql, execute=True)
+
+    async def update_status_false(self):
+        sql = f"UPDATE admin SET status=FALSE"
+        return await self.execute(sql, execute=True)

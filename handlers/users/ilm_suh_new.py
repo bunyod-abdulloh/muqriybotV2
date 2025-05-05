@@ -29,7 +29,8 @@ async def handle_video_id(message: types.Message):
     video_id = message.video.file_id
 
     await ilmdb.add_ilm_suhbati_video(title="Jonli suhbatlar", video=video_id)
-    
+    await message.answer(text="Video bazaga joylandi")
+
 
 @dp.callback_query_handler(F.data.startswith("ilmsuhbati:"), state="*")
 async def handle_ilm_suh_ft(call: types.CallbackQuery):

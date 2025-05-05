@@ -8,3 +8,7 @@ class IlmSuhbatiDB:
     async def add_ilm_suhbati(self, title):
         sql = """ INSERT INTO ilm_suhbati (title) VALUES ($1) RETURNING id """
         return await self.db.execute(sql, title, fetchval=True)
+
+    async def get_titles(self):
+        sql = """ SELECT id, title FROM ilm_suhbati """
+        return await self.db.execute(sql, fetch=True)

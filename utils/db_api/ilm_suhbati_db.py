@@ -5,9 +5,9 @@ class IlmSuhbatiDB:
     def __init__(self, db: Database):
         self.db = db
 
-    async def add_ilm_suhbati_video(self, title, video):
-        sql = """ INSERT INTO ilm_suhbati (title, video) VALUES ($1, $2) RETURNING id """
-        return await self.db.execute(sql, title, video, fetchval=True)
+    async def add_ilm_suhbati_video(self, title, title_id, video):
+        sql = """ INSERT INTO ilm_suhbati (title, title_id, video) VALUES ($1, $2, $3) """
+        return await self.db.execute(sql, title, title_id, video, fetchval=True)
 
     async def get_titles(self):
         sql = """ SELECT id, title FROM ilm_suhbati """

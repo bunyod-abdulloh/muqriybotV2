@@ -24,11 +24,10 @@ async def handle_add_id(message: types.Message):
     await AdminStates.ADD_ID.set()
 
 
-@dp.message_handler(state=AdminStates.ADD_ID, content_types=types.ContentType.VIDEO)
+@dp.message_handler(state=AdminStates.ADD_ID, content_types=types.ContentType.TEXT)
 async def handle_video_id(message: types.Message):
-    video_id = message.video.file_id
-
-    await ilmdb.add_ilm_suhbati_video(title="Jonli suhbatlar", video=video_id)
+    title, title_id, message_id = message.text.split(",")
+    await ilmdb.add_ilm_suhbati_video(title=title, title_id=title_id, video=message_id)
     await message.answer(text="Video bazaga joylandi")
 
 

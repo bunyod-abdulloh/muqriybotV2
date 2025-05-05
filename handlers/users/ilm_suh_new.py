@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from magic_filter import F
 
-from keyboards.inline.ilm_suhbati_main_buttons import ilm_suhbats_main_ikb
+from keyboards.inline.ilm_suhbati_main_buttons import ilm_suhbats_main_ikb, ilm_suhbati_audio_video_ikb
 from loader import dp, ilmdb
 from states.admin_states import AdminStates
 
@@ -34,6 +34,14 @@ async def handle_video_id(message: types.Message):
 
 @dp.callback_query_handler(F.data.startswith("ilmsuhbati:"), state="*")
 async def handle_ilm_suh_ft(call: types.CallbackQuery):
-    chapter_id = int(call.data.split(":")[1])
-    print(chapter_id)
+    title_id = int(call.data.split(":")[1])
+    await call.message.edit_text(text="Suhbatni kerakli shaklini tanlang", reply_markup=ilm_suhbati_audio_video_ikb(
+        title_id=title_id
+    ))
+
+
+@dp.callback_query_handler(F.data.startswith("ilmsuhaudio:"))
+async def handle_audio_ilm_suh(call: types.CallbackQuery):
+    title_id = int(call.data.split(":")[1])
+    audios = await ilmdb.get_audio_by_title_id(title_id=title_id)
 

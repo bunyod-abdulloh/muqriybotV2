@@ -13,6 +13,10 @@ class IlmSuhbatiDB:
         sql = """ SELECT id, title FROM ilm_suhbati """
         return await self.db.execute(sql, fetch=True)
 
+    async def get_audio_by_title_id(self, title_id):
+        sql = """ SELECT audio FROM ilm_suhbati WHERE title_id = $1 """
+        return await self.db.execute(sql, title_id, fetch=True)
+
     async def set_ilm_suhbat_video(self, video_id, row_id):
         sql = """ UPDATE ilm_suhbati SET video = $1 WHERE id = $1 """
         return await self.db.execute(sql, video_id, row_id, execute=True)

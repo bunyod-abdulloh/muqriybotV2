@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from magic_filter import F
 
-from keyboards.inline.ilm_suhbati_main_buttons import ilm_suhbats_main_ikb, ilm_suhbats_main_list
+from keyboards.inline.ilm_suhbati_main_buttons import ilm_suhbats_main_ikb
 from loader import dp, ilmdb
 from states.admin_states import AdminStates
 

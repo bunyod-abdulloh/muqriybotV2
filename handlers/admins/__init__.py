@@ -1,1 +1,1 @@
-from . import main_page
+from . import media, main_page

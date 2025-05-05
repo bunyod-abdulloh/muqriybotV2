@@ -55,8 +55,8 @@ async def elonj(message: types.Message, state: FSMContext):
         except aiogram.exceptions.BotBlocked:
             failed_count += 1
             await db.delete_user_tgid(user['telegram_id'])  # Faqat bloklangan foydalanuvchilar o'chiriladi
-        except Exception as e:
-            failed_count += 1
+        except Exception:
+            pass
 
         if index % 1500 == 0:
             await asyncio.sleep(30)  # Yuborishni vaqtincha to'xtatish
@@ -73,8 +73,9 @@ async def elonj(message: types.Message, state: FSMContext):
 async def count_users_handler(message: types.Message):
     count = await db.count_users()
     await message.answer(
-        text=f"Umumiy foydalanuvchilar soni: {count} ta"
+        text=f"Foydalanuvchilar soni: {count} ta"
     )
+
 
 @dp.message_handler(F.text == "add_users", user_id=SUPER_ADMIN)
 async def add_users(message: types.Message):

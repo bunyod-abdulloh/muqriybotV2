@@ -1,25 +1,20 @@
 import asyncio
 
-import asyncpg
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, ChatMemberUpdated, Message, ReplyKeyboardRemove
 
 from data.config import CHANNEL_ID, CHANNEL_LINK, CHANNEL_TITLE
-from keyboards.inline.qversein import check_button
-from loader import bot, dp, db
-from utils.misc import subscription
 from keyboards.default.start_dk import main_keyboard
+from keyboards.inline.qversein import check_button
+from loader import bot, dp, db, udb
 
 
 @dp.message_handler(commands=['start'], state="*")
 async def show_channels(message: Message, state: FSMContext):
-    await message.answer(message.text)
     try:
-        await db.add_user(message.from_user.id)
-    except asyncpg.exceptions.UniqueViolationError:
-        pass
-    else:
+        await udb.add_user(message.from_user.id)
+    except Exception:
         pass
     channels_format = f"👉 <a href='{CHANNEL_LINK}'>{CHANNEL_TITLE}</a>\n"
     await message.answer(
@@ -50,29 +45,25 @@ async def members(message: ChatMemberUpdated):
 
 @dp.message_handler(text="🏡 Бош саҳифа", state="*")
 async def boshmenyu_handler(message: types.Message, state: FSMContext):
+    await state.finish()
     await message.answer(
         text="🏡 Бош саҳифа",
         reply_markup=main_keyboard
     )
 
-    await state.finish()
-
 
 @dp.callback_query_handler(text="check_subs")
-async def checker(call: CallbackQuery):
-    await call.answer()
+async def checker_(call: CallbackQuery):
+    user = await bot.get_chat_member(chat_id=CHANNEL_ID, user_id=call.from_user.id)
 
-    status = await subscription.check(user_id=call.from_user.id,
-                                      channel=CHANNEL_ID)
+    allowed_users = ['administrator', 'creator', 'member']
 
-    if status:
-        result = f"<b>{CHANNEL_TITLE}</b> каналимизга обуна бўлгансиз!\n\n"
-        await call.message.answer(result, reply_markup=main_keyboard, disable_web_page_preview=True)
-
+    if user.status in allowed_users:
+        await call.answer(cache_time=0)
+        await call.message.delete()
+        await call.message.answer(text="🏡 Бош саҳифа", reply_markup=main_keyboard)
     else:
-        result = (f"Сиз, 👉 <a href='{CHANNEL_LINK}'>{CHANNEL_TITLE}</a>\nканалига обуна бўлмагансиз"
-                  f"\n<a href='{CHANNEL_LINK}'>Обуна бўлиш</a>")
-        await call.message.answer(result, disable_web_page_preview=True)
+        await call.answer(text="Сиз каналимизга аъзо бўлмагансиз!", show_alert=True)
 
 
 @dp.message_handler(text='id', state='*')
@@ -83,7 +74,7 @@ async def idolish_admin(message: Message, state: FSMContext):
 
 @dp.message_handler(content_types=['any'], state='admin_id')
 async def get_id(message: types.Message):
-    await asyncio.sleep(2)
+    await asyncio.sleep(1)
 
     if message.content_type == 'animation':
         await message.answer(text=f"<code>{message.animation.file_id}</code>")
@@ -92,7 +83,23 @@ async def get_id(message: types.Message):
         await message.answer(text=f"<code>{message.audio.file_id}</code>")
 
     if message.content_type == 'video':
-        await message.answer(text=f"<code>{message.video.file_id}</code>")
+        await message.answer(text=f"<code>{message.video.file_id}</code>\n\n"
+                                  f"{message.caption}")
+
+        urls = []
+
+        # URL'larni ajratib olish
+        for entity in message["caption_entities"]:
+            if entity["type"] == "text_link":
+                urls.append(entity["url"])
+
+        for i, url in enumerate(urls, start=1):
+            if i == 1:
+                print(f"Youtube orqali ko'rish: {url}")
+            if i == 2:
+                print(f"Manba : {url}")
+            # if i == 3:
+            #     print(f"URL {i}: {url}")
 
     if message.content_type == 'photo':
         await message.answer(text=f"<code>{message.photo[-1].file_id}</code>")

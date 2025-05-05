@@ -1,8 +1,7 @@
 from typing import Union
 
 import asyncpg
-from asyncpg import Connection
-from asyncpg.pool import Pool
+from asyncpg import Pool, Connection
 
 from data import config
 
@@ -54,47 +53,25 @@ class Database:
                 id SERIAL PRIMARY KEY,
                 status BOOLEAN DEFAULT FALSE
             );
+            """,
+            """
+            CREATE TABLE IF NOT EXISTS husary (
+                id SERIAL PRIMARY KEY,
+                sura_name VARCHAR(60) NULL,
+                total_verses INTEGER NULL,
+                zip VARCHAR(200) NULL,
+                audio VARCHAR(200) NULL                     
+            );
+            """,
+            """
+            CREATE TABLE IF NOT EXISTS ilm_suhbati (
+                id SERIAL PRIMARY KEY,
+                title VARCHAR(200) NULL,
+                audio VARCHAR(200) NULL,
+                video VARCHAR(200) NULL,
+                caption VARCHAR(2000) NULL 
+            );
             """
         ]
         for query in queries:
             await self.execute(query, execute=True)
-
-    # ==================== USERS ====================
-    async def add_user(self, telegram_id):
-        sql = "INSERT INTO Users (telegram_id) VALUES($1)"
-        return await self.execute(sql, telegram_id, fetchrow=True)
-
-    async def select_all_users(self):
-        sql = "SELECT * FROM Users"
-        return await self.execute(sql, fetch=True)
-
-    async def select_user(self, telegram_id):
-        sql = "SELECT * FROM Users WHERE telegram_id=$1"
-        return await self.execute(sql, telegram_id, fetchrow=True)
-
-    async def count_users(self):
-        sql = "SELECT COUNT(*) FROM Users"
-        return await self.execute(sql, fetchval=True)
-
-    async def delete_user_tgid(self, tgid):
-        await self.execute("DELETE FROM Users WHERE telegram_id=$1", tgid, execute=True)
-
-    async def drop_table_users(self):
-        await self.execute("DROP TABLE Users", execute=True)
-
-    # ==================== ADMIN ====================
-    async def add_status(self):
-        sql = "INSERT INTO admin (status) VALUES(FALSE)"
-        return await self.execute(sql, fetchrow=True)
-
-    async def select_status(self):
-        sql = "SELECT status FROM admin"
-        return await self.execute(sql, fetchval=True)
-
-    async def update_status_true(self):
-        sql = f"UPDATE admin SET status=TRUE"
-        return await self.execute(sql, execute=True)
-
-    async def update_status_false(self):
-        sql = f"UPDATE admin SET status=FALSE"
-        return await self.execute(sql, execute=True)

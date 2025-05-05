@@ -8,3 +8,7 @@ class Quran_Prayers(StatesGroup):
 class MuqriyVideoStates(StatesGroup):
     qadamjolar_menu = State()
     qadamjolar_videos = State()
+
+
+class HusaryStates(StatesGroup):
+    get_ayah = State()

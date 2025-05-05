@@ -7,8 +7,8 @@ ilm_suhbats_main_list = ["Jonli suhbatlar", "Surxondaryo safari", "Toshkent vilo
 def ilm_suhbats_main_ikb(data):
     btn = InlineKeyboardMarkup(row_width=1)
 
-    for n in data:
+    for index, n in enumerate(data, start=1):
         btn.insert(
-            InlineKeyboardButton(text=n['title'], callback_data=f"ilmsuhbati:{n['id']}"
+            InlineKeyboardButton(text=str(index), callback_data=f"ilmsuhbati:{n['id']}"
                                  ))
     return btn

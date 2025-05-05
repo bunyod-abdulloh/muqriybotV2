@@ -67,6 +67,7 @@ class Database:
             CREATE TABLE IF NOT EXISTS ilm_suhbati (
                 id SERIAL PRIMARY KEY,
                 title VARCHAR(200) NULL,
+                subtitle VARCHAR(500) NULL,
                 audio VARCHAR(200) NULL,
                 video VARCHAR(200) NULL,
                 caption VARCHAR(2000) NULL 

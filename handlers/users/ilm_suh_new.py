@@ -10,7 +10,11 @@ from loader import dp, ilmdb
 async def handle_ilm_suh_main(message: types.Message, state: FSMContext):
     await state.finish()
     data = await ilmdb.get_titles()
-    await message.answer(text=message.text, reply_markup=ilm_suhbats_main_ikb(data=data))
+    text = str()
+
+    for index, title in enumerate(data, start=1):
+        text += f"{index}. {title['title']}\n"
+    await message.answer(text=text, reply_markup=ilm_suhbats_main_ikb(data=data))
 
 
 @dp.callback_query_handler(F.data.startswith("ilmsuhbati:"), state="*")

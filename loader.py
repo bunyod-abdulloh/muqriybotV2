@@ -1,5 +1,5 @@
 from aiogram import Bot, Dispatcher, types
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.contrib.fsm_storage.redis import RedisStorage2
 
 from data import config
 from utils.db_api.ilm_suhbati_db import IlmSuhbatiDB

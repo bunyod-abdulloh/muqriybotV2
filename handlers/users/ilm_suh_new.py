@@ -20,7 +20,8 @@ async def handle_ilm_suh_main(message: types.Message, state: FSMContext):
 
 @dp.message_handler(F.text == "on_id", state="*")
 async def handle_add_id(message: types.Message):
-    await message.answer(text="Jonli suhbatlar uchun videolarni yuboring")
+    await message.answer(text="Jonli suhbatlar uchun videolarni yuboring\n\n"
+                              "Namuna: title,title_id,message_id")
     await AdminStates.ADD_ID.set()
 
 

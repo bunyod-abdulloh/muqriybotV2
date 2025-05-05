@@ -6,7 +6,7 @@ from utils.db_api.ilm_suhbati_db import IlmSuhbatiDB
 from utils.db_api.users_admins_db import Database, UsersAdminsDB
 
 bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
-storage = MemoryStorage()
+storage = RedisStorage2('localhost', 6379, state_ttl=3000, data_ttl=3000)
 dp = Dispatcher(bot, storage=storage)
 db = Database()
 udb = UsersAdminsDB(db)

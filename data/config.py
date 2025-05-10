@@ -9,6 +9,7 @@ IP = env.str("IP")
 CHANNEL_ID = env.str("CHANNEL_ID")
 CHANNEL_LINK = env.str("CHANNEL_LINK")
 CHANNEL_TITLE = env.str("CHANNEL_TITLE")
+REDIS_PASS = env.str("REDIS_PASS")
 
 DB_USER = env.str("DB_USER")
 DB_PASS = env.str("DB_PASS")

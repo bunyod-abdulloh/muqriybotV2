@@ -42,8 +42,8 @@ async def admin_sendmes_state(message: types.Message, state: FSMContext):
 @dp.message_handler(state="elon", user_id=SUPER_ADMIN, content_types=types.ContentTypes.ANY)
 async def elonj(message: types.Message, state: FSMContext):
     await state.finish()
-    await db.update_status_true()
-    all_users = await db.select_all_users()
+    await udb.update_status_true()
+    all_users = await udb.select_all_users()
     success_count, failed_count = 0, 0
 
     for index, user in enumerate(all_users, start=1):
@@ -69,7 +69,7 @@ async def elonj(message: types.Message, state: FSMContext):
 
 @dp.message_handler(F.text == "Count_all_users", user_id=SUPER_ADMIN, state="*")
 async def count_users_handler(message: types.Message):
-    count = await db.count_users()
+    count = await udb.count_users()
     await message.answer(
         text=f"Foydalanuvchilar soni: {count} ta"
     )

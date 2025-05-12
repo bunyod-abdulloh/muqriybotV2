@@ -77,6 +77,7 @@ async def count_users_handler(message: types.Message):
 
 @dp.message_handler(F.text == "add_users", user_id=SUPER_ADMIN)
 async def add_users(message: types.Message):
+    await message.answer(text="User qo'shish boshlandi!")
     count = 0
     for user in users:
         try:

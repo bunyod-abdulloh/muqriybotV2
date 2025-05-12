@@ -1,18 +1,16 @@
 import asyncio
 
 import aiogram
-import asyncpg
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
 from magic_filter import F
 
-from handlers.admins.sample import users_list
+from data.config import SUPER_ADMIN
 from keyboards.default.adminkeys import adm_adm
 from keyboards.default.start_dk import main_keyboard
-
-from data.config import SUPER_ADMIN
-from loader import dp, db
+from loader import dp, db, udb
+from services.users_json import users
 
 
 @dp.message_handler(Command('admins'), user_id=SUPER_ADMIN, state="*")
@@ -80,13 +78,11 @@ async def count_users_handler(message: types.Message):
 @dp.message_handler(F.text == "add_users", user_id=SUPER_ADMIN)
 async def add_users(message: types.Message):
     count = 0
-    for user in users_list:
+    for user in users:
         try:
             count += 1
-            await db.add_user(telegram_id=user)
-        except asyncpg.exceptions.UniqueViolationError:
-            pass
-        else:
+            await udb.add_user(telegram_id=user)
+        except Exception as err:
             pass
 
     await message.answer(text=f"{count} ta foydalanuvchi qo'shildi!")

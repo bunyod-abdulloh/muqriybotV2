@@ -1,4 +1,5 @@
 from . import a_main_menu
+from . import a_start_hr
 from . import arbain_hr
 from . import haj_hr
 from . import hamnafas_hr
@@ -24,7 +25,6 @@ from . import quranverse_hr
 from . import quranversenext_hr
 from . import ramazon1443_hr
 from . import shamoil_hr
-from . import start_hr
 from . import tahoratvanamoz_hr
 from . import taroveh1443_hr
 from . import taroveh1444

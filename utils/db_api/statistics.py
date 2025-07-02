@@ -20,4 +20,4 @@ class StatisticsDB:
 
     async def get_statistics_by_date(self, created_at):
         sql = """ SELECT created_at, chapter_name, view_count FROM statistics WHERE created_at = $1 """
-        return await self.db.execute(sql, fetch=True)
+        return await self.db.execute(sql, created_at, fetch=True)

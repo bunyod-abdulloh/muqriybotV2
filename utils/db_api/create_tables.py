@@ -73,7 +73,7 @@ class Database:
             );
             """,
             """
-            CREATE TABLE IF NOT EXISTS statisticts (
+            CREATE TABLE IF NOT EXISTS statistics (
                 id SERIAL PRIMARY KEY,
                 chapter_name VARCHAR(255) NULL UNIQUE,
                 view_count INTEGER DEFAULT 1

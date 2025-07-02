@@ -1,3 +1,4 @@
+from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 
 from data.config import TAROVEH_1444
@@ -28,7 +29,8 @@ markup_back.add(InlineKeyboardButton(text='⬅️ Ortga', callback_data='back_ba
 
 
 @dp.message_handler(text='📌 Таровеҳ намози 1444', state='*')
-async def t1444_one(m: Message):
+async def t1444_one(m: Message, state: FSMContext):
+    await state.finish()
     await statdb.upsert_statistics(chapter_name="Taroveh 1444")
     await m.answer(m.text, reply_markup=alldk)
     await TarovehTitle.one.set()

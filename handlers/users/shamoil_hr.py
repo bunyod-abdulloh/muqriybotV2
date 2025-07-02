@@ -8,8 +8,9 @@ hazrat = "\n\n<a href='https://www.facebook.com/hazratim.uz'>Facebook</a> | <a h
 
 # VIDEO HANDLER
 
-@dp.message_handler(text = "☀ Шамоилул Муҳаммадия")
+@dp.message_handler(text="☀ Шамоилул Муҳаммадия", state="*")
 async def shamoil_menyu(msg: types.Message, state:FSMContext):
+    await state.finish()
     await statdb.upsert_statistics(chapter_name="Shamoili Muhammadiya")
     await msg.answer_photo(photo="AgACAgIAAxkBAAIBwGI_Df9YBlWxOLW01nPiNNONGUhhAAInsDEbCC-JSRowbITtWFr2AQADAgADeQADIwQ",
                            caption="\n\n“Шайх Муҳаммад Содиқ Муҳаммад Юсуф” жоме масжидида сийратга оид суҳбатлар "

@@ -1,4 +1,5 @@
 from aiogram import types
+from aiogram.dispatcher import FSMContext
 
 from keyboards.default.misrsafari_dk import misrsafari_keys
 from loader import dp, statdb
@@ -15,8 +16,9 @@ misr_dict = {1: {'v': 'BAACAgIAAxkBAAEEvepipRYCt8w7n7Kbp4Azi0KcKmDViwACvxsAAtXkK
 				 'c': '<b>Халил Хусoрийнинг мақoм (қабрлари) зиёрати</b>\n\n<a href=\'https://youtu.be/ZBiW35wXGoM\'>Youtube орқали кўриш</a>'}}
 
 
-@dp.message_handler(text="🏜 Миср сафари")
-async def misrsafari(msg: types.Message):
+@dp.message_handler(text="🏜 Миср сафари", state="*")
+async def misrsafari(msg: types.Message, state: FSMContext):
+	await state.finish()
 	await statdb.set_statistics(chapter_name="Misr safari")
 	await msg.answer("🏜 Миср сафари", reply_markup=misrsafari_keys)
 

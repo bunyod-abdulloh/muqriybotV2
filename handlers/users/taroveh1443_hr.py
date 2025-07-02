@@ -5,8 +5,9 @@ from keyboards.default.taroveh1443_dk import t1443_m, t1443_av
 from loader import dp, bot, statdb
 
 
-@dp.message_handler(text = "📌 Таровеҳ намози 1443")
+@dp.message_handler(text="📌 Таровеҳ намози 1443", state="*")
 async def t1443m(msg:types.Message, state:FSMContext):
+	await state.finish()
 	await statdb.upsert_statistics(chapter_name="Taroveh 1443")
 	await msg.answer("📌 Таровеҳ намози 1443", reply_markup=t1443_m)
 	await state.set_state("t1443_m")

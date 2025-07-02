@@ -5,8 +5,9 @@ from keyboards.default.qasam_dk import qasam_bosqichlar, qasam01_default, qasam0
 from loader import dp, statdb
 
 
-@dp.message_handler(text='🕌 Ўн кеча билан қасам')
+@dp.message_handler(text='🕌 Ўн кеча билан қасам', state="*")
 async def qasam_category(message: types.Message, state:FSMContext):
+    await state.finish()
     await statdb.upsert_statistics(chapter_name="O'n kecha bilan qasam")
     await message.answer('"Ўн кеча билан қасам" туркум дарслари 3 босқичдан иборат. '
                          '\nУшбу дарслар орқали Сиз 10 кунда Қуръон ўқишни ўрганасиз.'

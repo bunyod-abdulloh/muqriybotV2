@@ -8,6 +8,7 @@ from loader import bot, dp, statdb
 
 @dp.message_handler(text = "🎧 \"Қуръони карим\" тиловати \n(ўттиз пора)", state="*")
 async def tartil(message: types.Message, state:FSMContext):
+    await state.finish()
     await statdb.upsert_statistics(chapter_name="Qori akalar qiroati")
     await message.answer("\"Қуръони карим\" тиловати",
                          reply_markup = await muqriy_dk()

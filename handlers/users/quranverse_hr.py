@@ -7,8 +7,9 @@ from loader import dp, statdb
 from states.data import Edit
 
 
-@dp.message_handler(text="🎧 \"Қуръони карим\" тиловати \n(таълим услубида)")
-async def quranverse(msg: types.Message):
+@dp.message_handler(text="🎧 \"Қуръони карим\" тиловати \n(таълим услубида)", state="*")
+async def quranverse(msg: types.Message, state: FSMContext):
+    await state.finish()
     await statdb.upsert_statistics(chapter_name="Qur'oni Karim (ta'lim uslubida)")
     await msg.answer("🎧 \"Қуръони карим\" тиловати \n(таълим услубида)",
                      reply_markup=await suralar38gacha())

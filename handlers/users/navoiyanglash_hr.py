@@ -8,8 +8,10 @@ islomuz = "\n\n<a href='https://www.facebook.com/www.islom.uz'>Facebook</a> | <a
 
 nang_dict = {14:{'v':'BAACAgIAAxkBAAEGOaFitCCCIrHvgChnCm1PWwtmG0Pq_QACAh0AAuyfiEnRRHWPoyS0nCkE','a':'CQACAgIAAxkBAAEGPClitGTfvU2nhUMBeAsFcMtEQ0_Z4gACqxoAAkjSoEk9pPiqGZZ32ikE','c':'<b>"Навоийни англаш сари" | Алишер Навоий ким бўлган? (14-суҳбат)</b>\n\n<a href=\'https://youtu.be/5aNSp1r5J6M\'>Youtube орқали кўриш</a>'},15:{'v':'BAACAgIAAxkBAAEGOaVitCHjzaT13zfIW1OThUtkQ4OTzgACqRwAAnSRmUkXxJw4XGuFoSkE','a': 'CQACAgIAAxkBAAEGPH5itGZSL319dnUg-Hx0GJSdWooUnQACshoAAkjSoElbyX-r2tQtKSkE','c': '<b>"Навоийни англаш сари" | "Ашрақат мин акси шамсил" ғазали шарҳи (15-суҳбат)</b>\n\n<a href=\'https://youtu.be/5aNSp1r5J6M\'>Youtube орқали кўриш</a>'},16: {'v': 'BAACAgIAAxkBAAEGhPNiupd-qnDFoWZKwtjwFPNqjacJ4QACqB4AAtoK0EkCSOTNFshWTCkE','a': 'CQACAgIAAxkBAAEGjp9iuwq8ICm5LW1hr2cpeJJJYZ_aEQACchcAAv4r2EkNSPyVwXpJqSkE','c': '<b>"Навоийни англаш сари" | "Шоҳ ва дарвеш" ғазали шарҳи (16-суҳбат)</b>\n\n<a href=\'https://youtu.be/gXTKytcY0QI\'>Youtube орқали кўриш</a>'}}
 
-@dp.message_handler(text = "📑 Навоийни англаш сари")
+
+@dp.message_handler(text="📑 Навоийни англаш сари", state="*")
 async def nang_umum_hands(msg: types.Message, state:FSMContext):
+	await state.finish()
 	await statdb.upsert_statistics(chapter_name="Navoiyni anglash sari")
 	await msg.answer("<b>\"Навоийни англаш сари\"</b> туркум суҳбатлари.", reply_markup=nang_umum_keys)
 	await state.set_state("nang")

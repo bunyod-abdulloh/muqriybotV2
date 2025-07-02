@@ -4,7 +4,7 @@ from aiogram.dispatcher import FSMContext
 from data.config import QADAMJOLAR
 from keyboards.inline.qadamjolar_inline_buttons import MENU_POST, LATEST_RESULT, chunks, key_returner, \
     qadamjolar_back_button
-from loader import dp, bot
+from loader import dp, bot, statdb
 from states.users_state import MuqriyVideoStates
 
 ITEMS = list(range(1, 40))
@@ -22,6 +22,8 @@ async def alert_message(call: types.CallbackQuery):
 
 @dp.message_handler(text="📍 Расулуллоҳ ﷺ қадамжолари", state="*")
 async def qadamjolar_first_handler(message: types.Message, state: FSMContext):
+    await state.finish()
+    await statdb.upsert_statistics(chapter_name="Qadamjolar")
     c = 0
     datas = list(chunks(ITEMS, 15))
 

@@ -37,8 +37,10 @@ hamnafas_dict = {1: {'v': 'BAACAgIAAxkBAAEEa55ioFJ9umVmTZ6ZLNDN8QABcKqy8NIAAiUEA
                  15: {'v': 'BAACAgIAAxkBAAEG65FiwzkbO6p6foLUEQrCXn4W7-OpJAACqwYAAsv_gEksYhwk-dc_CCkE',
                       'c': 'Тошкентлик Зоҳидхон қори дада билан суҳбат \n\n3-қисм\n\nУшбу видеолавҳада ёш қорилар ва фарзандининг қори бўлишини ҳохлаганлар учун жуда керакли бўлган тавсиялар ҳамда кўплаб фойдали маълумотларни устоз Зоҳидхон қори дададан тинглашлари мумкин.\n\n<a href=\'@quranuz_kanali\'>@quranuz_kanali</a>'}}
 
-@dp.message_handler(text="📌 Қуръон ила ҳамнафас")
+
+@dp.message_handler(text="📌 Қуръон ила ҳамнафас", state="*")
 async def hamnafasvid(msg: types.Message, state: FSMContext):
+    await state.finish()
     await msg.answer("📌 Қуръон ила ҳамнафас",
                      reply_markup = await hamnafas_dk())
     await state.set_state("hamnafas_state")

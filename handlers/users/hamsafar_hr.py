@@ -6,8 +6,10 @@ from loader import dp, bot, statdb
 
 CHANNEL_ID = -1001793651408
 
-@dp.message_handler(text="🌏 Ҳамсафар")
+
+@dp.message_handler(text="🌏 Ҳамсафар", state="*")
 async def hvid_hands(msg: types.Message, state:FSMContext):
+	await state.finish()
 	await msg.answer("🌏 Ҳамсафар",
 					 reply_markup = h1)
 	await state.set_state("hamsafar_state")

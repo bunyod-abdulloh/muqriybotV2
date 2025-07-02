@@ -10,7 +10,7 @@ habar = "Қуйидаги тугмалардан бирини танланг:"
 
 @dp.message_handler(text = "🔆 Мавлид", state="*")
 async def mavlidumumiy(msg: types.Message, state:FSMContext):
-	await statdb.set_statistics(chapter_name="Mavlid")
+	await state.finish()
 	await msg.answer("🔆 Мавлид",
 					 reply_markup = await mbm_dk())
 	await state.set_state("mavlid_state")
@@ -18,14 +18,17 @@ async def mavlidumumiy(msg: types.Message, state:FSMContext):
 @dp.message_handler(state="mavlid_state")
 async def mavlidvideo(msg: types.Message, state:FSMContext):
 	if msg.text == "🎧 Ayдио":
+		await statdb.set_statistics(chapter_name="Mavlid")
 		await msg.answer(msg.text,
 						 reply_markup = await m1_dk())
 		await state.set_state('mavlid_audio')
 	elif msg.text == "🎬 Bидeо":
+		await statdb.set_statistics(chapter_name="Mavlid")
 		await msg.answer(msg.text,
 						 reply_markup = await m1_dk())
 		await state.set_state('mavlid_video')
 	elif msg.text == 'Мавлиди Шариф':
+		await statdb.set_statistics(chapter_name="Mavlid")
 		await msg.answer(msg.text,
 						 reply_markup = await sharif_dk())
 		await state.set_state('mavlid_sharif')

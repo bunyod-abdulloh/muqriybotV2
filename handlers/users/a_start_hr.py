@@ -12,6 +12,7 @@ from loader import bot, dp, db, udb
 
 @dp.message_handler(commands=['start'], state="*")
 async def show_channels(message: Message, state: FSMContext):
+    await state.finish()
     try:
         await udb.add_user(telegram_id=message.from_user.id)
     except Exception:
@@ -22,7 +23,6 @@ async def show_channels(message: Message, state: FSMContext):
         "шаклда кўришингиз ва эшитишингиз мумкин.", reply_markup=ReplyKeyboardRemove())
     await message.answer(f"Ботни ишлатиш учун қуйидаги каналимизга обуна бўлинг\n"
                          f"{channels_format}", reply_markup=check_button, disable_web_page_preview=True)
-    await state.finish()
 
 
 @dp.chat_member_handler(state='*')

@@ -25,8 +25,10 @@ quran_talim_dict = {2: {'v': 'BAACAgIAAxkBAAEG0NJiwL0IkgZuVl3QNhwZWYkdKr-kRAAC_B
 						'c': 'Қуръони каримни ёдлаш бўйича усул ва муҳим тавсиялар.'}}
 quranuzcap = "\n\n<a href='https://www.facebook.com/hazratim.uz'>Facebook</a> | <a href='https://www.instagram.com/hazratim_uz/'>Instagram</a> | <a href='https://t.me/joinchat/AAAAAFki3TLL4WCIyXw22g'>Telegram</a> | <a href='https://www.youtube.com/watch?v=eCMD_cufc3A&list=PLt7pLJiSp2TAZrqP789st_tz8xK72IhjP'>Youtube</a>"
 
-@dp.message_handler(text="📖 Қуръон таълими (тавсиялар)")
+
+@dp.message_handler(text="📖 Қуръон таълими (тавсиялар)", state="*")
 async def qurantalim(msg: types.Message, state:FSMContext):
+	await state.finish()
 	await statdb.upsert_statistics(chapter_name="Qur'oni Karim ta'limi")
 	await msg.answer("📖 Қуръон таълими", reply_markup=quran_m)
 	await state.set_state("q")

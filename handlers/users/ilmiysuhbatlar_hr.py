@@ -14,6 +14,7 @@ habar = "Илтимос қуйидаги тугмалардан бирини т�
 
 @dp.message_handler(text="📚 Илмий суҳбатлар", state="*")
 async def ilm_suh(msg: types.Message, state: FSMContext):
+    await state.finish()
     await msg.answer("📚 Илмий суҳбатлар",
                      reply_markup=await ilmiy_suhbatlar_home_page())
     await state.set_state("ilmsuh")

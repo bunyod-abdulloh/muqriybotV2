@@ -31,7 +31,7 @@ async def juma_title():
 
 @dp.message_handler(text='📌 Жума мавъизалари', state='*')
 async def jumamaviza_func(msg: Message, state: FSMContext):
-    await statdb.set_statistics(chapter_name="Juma mav'izalari")
+    await state.finish()
     await msg.answer(msg.text, reply_markup=alldk)
     await JumaSuhbatlari.juma_one.set()
 
@@ -39,10 +39,12 @@ async def jumamaviza_func(msg: Message, state: FSMContext):
 @dp.message_handler(state=JumaSuhbatlari.juma_one)
 async def juma_one_state(msg: Message, state: FSMContext):
     if msg.text == '🎧 Ayдиo':
+        await statdb.set_statistics(chapter_name="Juma mav'izalari")
         await msg.answer(text=await juma_title(), reply_markup=await juma_suhbatlari_keys(audio=True))
         await JumaSuhbatlari.juma_audio_one.set()
 
     elif msg.text == '🎬 Видео':
+        await statdb.set_statistics(chapter_name="Juma mav'izalari")
         await msg.answer(text=await juma_title(), reply_markup=await juma_suhbatlari_keys(video=True))
         await JumaSuhbatlari.juma_video_one.set()
 

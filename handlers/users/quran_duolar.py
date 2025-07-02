@@ -1,4 +1,5 @@
 from aiogram import types
+from aiogram.dispatcher import FSMContext
 
 from handlers.users.quran_duolar_dict import duo_dict
 from keyboards.default.users_custom_buttons import quran_prayers_custom_buttons
@@ -12,7 +13,8 @@ for key in duo_dict.keys():
 
 
 @dp.message_handler(text="🤲 Қуръоний дуолар", state="*")
-async def qd_title_page(message: types.Message):
+async def qd_title_page(message: types.Message, state: FSMContext):
+    await state.finish()
     await statdb.upsert_statistics(chapter_name="Qur'oniy duolar")
     await message.answer(text=message.text,
                          reply_markup=quran_prayers_custom_buttons)

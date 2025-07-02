@@ -47,6 +47,7 @@ markup_back.add(InlineKeyboardButton(text='⬅️ Ortga', callback_data='qs_back
 
 @dp.message_handler(text="📖 Қуръони карим", state='*')
 async def bot_start(msg: Message, state: FSMContext):
+    await state.finish()
     await statdb.upsert_statistics(chapter_name="Qur'oni Karim (skrinshot)")
     await msg.answer('Sura nomini tanlang:', reply_markup=markup_one)
     await state.set_state('qs_one')

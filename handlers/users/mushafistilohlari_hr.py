@@ -20,8 +20,10 @@ qisqa_dict = {1:{'v':'BAACAgIAAxkBAAIFnGI_5h_r7CBfd7u4uqsOL5CmmYdbAAJwBwACJMBYSM
               12:{'v':'BAACAgIAAxkBAAIFsmI_5lj6KMnd3TbelBh6NBscU0RrAALPBwACJMBYSDG6ivaiZVzRIwQ','c':'<b>12. МУСҲАФ РАСМИ ХАТИ ТАВФИҚИЙМИ?</b>\n\n«Мусҳаф истилоҳлари шарҳи» туркум суҳбатларидан\n\n<i>Қуръони Карим ходими\nҲасанхон Яҳё Абдулмажид</i>\n\n<a href=\'https://youtu.be/AhnbC_w5U70\'>Youtube орқали кўриш</a>'}
               }
 
-@dp.message_handler(text = "📑 Мусҳаф истилоҳлари шарҳи")
+
+@dp.message_handler(text="📑 Мусҳаф истилоҳлари шарҳи", state="*")
 async def sharh_handler(msg: types.Message, state:FSMContext):
+	await state.finish()
 	await statdb.upsert_statistics(chapter_name="Mus'haf istilohlari sharhi")
 	await msg.answer("Ушбу суҳбатлар туркуми қуйидаги мавзуларни ўз ичига олади: "
 	                 "\n\n1. ЮРТИМИЗДА ЧОП ҚИЛИНГАН МУСҲАФЛАР ҲАҚИДА"
@@ -40,7 +42,6 @@ async def sharh_handler(msg: types.Message, state:FSMContext):
 	                 "\n\nМУСҲАФ ИСТИЛОҲЛАРИ ШАРҲИ | 2-ҚИСМ"
 	                 "\n\nМУСҲАФ ИСТИЛОҲЛАРИ ШАРҲИ | 3-ҚИСМ", reply_markup=istiloh_sharh_keys)
 	await state.set_state("ist")
-	await statdb.set_statistics(chapter_name="Mus'haf istilohlari sharhi")
 
 @dp.message_handler(text = "Мусҳаф истилоҳлари шарҳи (1-қисм)", state="ist")
 async def istiloh_bulingan(msg: types.Message, state:FSMContext):

@@ -1,11 +1,13 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from loader import dp
 from keyboards.default.ramazon1443_dk import ram_m, ram_a1, ram_v1, ram_v2, ram_a2
+from loader import dp, statdb
+
 
 @dp.message_handler(text = "🤲 Рамазон - 1443")
 async def ramazon(msg: types.Message, state:FSMContext):
+	await statdb.upsert_statistics(chapter_name="Ramazon 1443")
 	await msg.answer("🤲 Рамазон - 1443", reply_markup=ram_m)
 	await state.set_state("ram_m")
 

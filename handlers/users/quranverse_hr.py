@@ -1,14 +1,15 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from keyboards.inline.qversein import keyingi
-from loader import dp
-from states.data import Edit
 from keyboards.default.qversedk import suralar38gacha, suralar76gacha, suralar114gacha, lugat
+from keyboards.inline.qversein import keyingi
+from loader import dp, statdb
+from states.data import Edit
 
 
 @dp.message_handler(text="🎧 \"Қуръони карим\" тиловати \n(таълим услубида)")
 async def quranverse(msg: types.Message):
+    await statdb.upsert_statistics(chapter_name="Qur'oni Karim (ta'lim uslubida)")
     await msg.answer("🎧 \"Қуръони карим\" тиловати \n(таълим услубида)",
                      reply_markup=await suralar38gacha())
     await Edit.a.set()

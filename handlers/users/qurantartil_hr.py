@@ -1,10 +1,12 @@
 from aiogram import types
 
-from loader import dp
 from keyboards.default.qurantartil_dk import tartil01_keys
+from loader import dp, statdb
+
 
 @dp.message_handler(text = "📖 Қуръон тартили")
 async def tartil(message: types.Message):
+    await statdb.upsert_statistics(chapter_name="Qur'on tartili")
     await message.answer_video(video="BAACAgIAAxkBAAIRaWJRXBXlAxpCqlhFE9GFN-CmyGwlAAK-AAO6phFI_1dfaKKXYo8jBA",
                                caption="<i>Қуръони каримни бошидан бирга мукаммал ўрганамиз!</i> \n\n Анонс."
                                        "\n\n<b>Устоз:\nХасанҳон Яҳё Абдулмажид</b>"

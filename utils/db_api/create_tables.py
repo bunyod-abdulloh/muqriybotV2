@@ -71,6 +71,12 @@ class Database:
                 audio INTEGER NULL,
                 video INTEGER NULL                 
             );
+            """,
+            """
+            CREATE TABLE IF NOT EXISTS statisticts (
+                id SERIAL PRIMARY KEY,
+                chapter_name VARCHAR(255) NULL,
+                view_count INTEGER DEFAULT 0 
             """
         ]
         for query in queries:

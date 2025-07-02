@@ -1,13 +1,13 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from loader import dp
-
 from keyboards.default.qasam_dk import qasam_bosqichlar, qasam01_default, qasam02_default, qasam03_default
+from loader import dp, statdb
 
 
 @dp.message_handler(text='🕌 Ўн кеча билан қасам')
 async def qasam_category(message: types.Message, state:FSMContext):
+    await statdb.upsert_statistics(chapter_name="O'n kecha bilan qasam")
     await message.answer('"Ўн кеча билан қасам" туркум дарслари 3 босқичдан иборат. '
                          '\nУшбу дарслар орқали Сиз 10 кунда Қуръон ўқишни ўрганасиз.'
                          '\nҲар бир дарснинг остига дарснинг PDF шакли ҳам жойланган.\n<a href=\'https://t.me/joinchat/AAAAAEUkQlyhuHM27IonOg\'>Вазифаларни '

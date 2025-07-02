@@ -1,13 +1,15 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from loader import dp
 from keyboards.default.quran_talimi import tanishuv_aud_vid_keys, tanishuv_keys, tanishuv_aud_keys
+from loader import dp, statdb
+
 
 # VIDEO HANDLER
 
 @dp.message_handler(text = "☪ Қуръон билан танишув")
 async def tartil(msg: types.Message, state:FSMContext):
+    await statdb.upsert_statistics(chapter_name="Qur'on bilan tanishuv")
     await msg.answer_photo(photo="AgACAgIAAxkBAAIMhGJEDh2UKj_PGNAsU4aV9YMQwb6gAAIKqzEb8ri5SqY7pXiTQEn5AQADAgADeQADIwQ",
                            caption="Уламоларимиз, хусусан, устозимиз Шайх Муҳаммад Содиқ Муҳаммад Юсуф раҳматуллоҳи "
                                    "алайҳи ҳар йили Рамазон ойида ўзига хос тайёргарлик қилиб, ушбу ойда халқимизга "

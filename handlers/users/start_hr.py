@@ -13,7 +13,7 @@ from loader import bot, dp, db, udb
 @dp.message_handler(commands=['start'], state="*")
 async def show_channels(message: Message, state: FSMContext):
     try:
-        await udb.add_user(message.from_user.id)
+        await udb.add_user(telegram_id=message.from_user.id)
     except Exception:
         pass
     channels_format = f"👉 <a href='{CHANNEL_LINK}'>{CHANNEL_TITLE}</a>\n"

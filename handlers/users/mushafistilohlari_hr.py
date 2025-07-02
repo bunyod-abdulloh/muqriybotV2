@@ -1,9 +1,8 @@
 from aiogram import types
-from  aiogram.dispatcher import FSMContext
-
-from loader import dp
+from aiogram.dispatcher import FSMContext
 
 from keyboards.default.mushafistilohlari_dk import istiloh_sharh_keys, istiloh_keys
+from loader import dp, statdb
 
 quranuz = "\n\n<a href='https://www.facebook.com/www.quran.uz/'>Facebook</a> | <a href='https://www.instagram.com/quran.uz_/?hl=ru'>Instagram</a> | <a href='https://t.me/joinchat/AAAAAEKXLiebTLCuRzZiHA'>Telegram</a> | <a href='https://www.youtube.com/quranuz?sub_confirmation=1'>Youtube</a>"
 
@@ -23,6 +22,7 @@ qisqa_dict = {1:{'v':'BAACAgIAAxkBAAIFnGI_5h_r7CBfd7u4uqsOL5CmmYdbAAJwBwACJMBYSM
 
 @dp.message_handler(text = "📑 Мусҳаф истилоҳлари шарҳи")
 async def sharh_handler(msg: types.Message, state:FSMContext):
+	await statdb.upsert_statistics(chapter_name="Mus'haf istilohlari sharhi")
 	await msg.answer("Ушбу суҳбатлар туркуми қуйидаги мавзуларни ўз ичига олади: "
 	                 "\n\n1. ЮРТИМИЗДА ЧОП ҚИЛИНГАН МУСҲАФЛАР ҲАҚИДА"
 	                 "\n\n2. ИМОМ ҲАФС ВА У КИШИНИНГ РИВОЯТЛАРИ ҲАҚИДА"
@@ -40,6 +40,7 @@ async def sharh_handler(msg: types.Message, state:FSMContext):
 	                 "\n\nМУСҲАФ ИСТИЛОҲЛАРИ ШАРҲИ | 2-ҚИСМ"
 	                 "\n\nМУСҲАФ ИСТИЛОҲЛАРИ ШАРҲИ | 3-ҚИСМ", reply_markup=istiloh_sharh_keys)
 	await state.set_state("ist")
+	await statdb.set_statistics(chapter_name="Mus'haf istilohlari sharhi")
 
 @dp.message_handler(text = "Мусҳаф истилоҳлари шарҳи (1-қисм)", state="ist")
 async def istiloh_bulingan(msg: types.Message, state:FSMContext):

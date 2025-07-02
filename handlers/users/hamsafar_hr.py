@@ -1,8 +1,8 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from loader import dp, bot
 from keyboards.default.hamsafar_dk import h1, h_empty
+from loader import dp, bot, statdb
 
 CHANNEL_ID = -1001793651408
 
@@ -12,8 +12,10 @@ async def hvid_hands(msg: types.Message, state:FSMContext):
 					 reply_markup = h1)
 	await state.set_state("hamsafar_state")
 
+
 @dp.message_handler(state="hamsafar_state")
 async def hamsafar_func(msg: types.Message):
+	await statdb.set_statistics(chapter_name="Hamsafar")
 	if msg.text in h_empty.keys():
 		await bot.copy_message(
 			chat_id=msg.from_user.id,

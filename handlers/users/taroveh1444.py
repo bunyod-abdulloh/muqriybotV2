@@ -1,10 +1,9 @@
-from keyboards.default.audio_video_dk import alldk
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 
-from loader import dp, bot
+from data.config import TAROVEH_1444
+from keyboards.default.audio_video_dk import alldk
+from loader import dp, bot, statdb
 from states.taroveh_states import TarovehTitle, TarovehAudio, TarovehVideo
-
-MUQRIY_ID = -1001705654629
 
 audio_dict = {'1 - 5': [2040, 2052, 2053, 2055, 2056], '6 - 10': [2057, 2058, 2059, 2060, 2061],
               '11 - 15': [2062, 2063, 2064, 2065, 2066], '16 - 20': [2067, 2068, 2069, 2070, 2071],
@@ -30,6 +29,7 @@ markup_back.add(InlineKeyboardButton(text='⬅️ Ortga', callback_data='back_ba
 
 @dp.message_handler(text='📌 Таровеҳ намози 1444', state='*')
 async def t1444_one(m: Message):
+    await statdb.upsert_statistics(chapter_name="Taroveh 1444")
     await m.answer(m.text, reply_markup=alldk)
     await TarovehTitle.one.set()
 
@@ -57,7 +57,7 @@ async def t1444_three(c: CallbackQuery):
     elif c.data in audio_dict.keys():
         for n in audio_dict[c.data]:
             await bot.copy_message(chat_id=c.from_user.id,
-                                   from_chat_id=MUQRIY_ID,
+                                   from_chat_id=TAROVEH_1444,
                                    message_id=n,
                                    reply_markup=markup_back)
         await TarovehAudio.two.set()
@@ -81,7 +81,7 @@ async def t1444_five(call: CallbackQuery):
 
     elif int(call.data) in video_dict.keys():
         await bot.copy_message(chat_id=call.from_user.id,
-                               from_chat_id=MUQRIY_ID,
+                               from_chat_id=TAROVEH_1444,
                                message_id=video_dict[int(call.data)],
                                reply_markup=markup_back)
         await TarovehVideo.two.set()

@@ -1,9 +1,9 @@
 from aiogram import types
-
 from aiogram.dispatcher import FSMContext
-from keyboards.default.arbain_dk import arbmenyu_kb, arbbuttons, arbtext, arb_vdict, arb_adict, arb_tdict, arbain_roviylar_buttons, arbain_roviylar_dict
 
-from loader import dp, bot
+from keyboards.default.arbain_dk import arbmenyu_kb, arbbuttons, arbtext, arb_vdict, arb_adict, arb_tdict, \
+    arbain_roviylar_buttons, arbain_roviylar_dict
+from loader import dp, bot, statdb
 
 VIDEOCHANNEL = -1001510029140
 AUDIOCHANNEL = -1001806542919
@@ -43,6 +43,7 @@ async def arbainmenyufunc(msg: types.Message, state:FSMContext):
 
 @dp.message_handler(state="arbainvideo")
 async def arbainvideofunc(msg: types.Message, state:FSMContext):
+    await statdb.set_statistics(chapter_name="Arba'in Navaviyya")
 
     if msg.text == "⏮ Олдинги":
         await msg.answer("⏮ Олдинги",
@@ -61,6 +62,7 @@ async def arbainvideofunc(msg: types.Message, state:FSMContext):
 
 @dp.message_handler(state = "arbainaudio")
 async def avstate(msg:types.Message, state:FSMContext):
+    await statdb.set_statistics(chapter_name="Arba'in Navaviyya")
 
     if msg.text == "⏮ Олдинги":
         await msg.answer("⏮ Олдинги",
@@ -78,6 +80,7 @@ async def avstate(msg:types.Message, state:FSMContext):
 
 @dp.message_handler(state = "arbaintext")
 async def arbaintextfunc(msg: types.Message, state:FSMContext):
+    await statdb.set_statistics(chapter_name="Arba'in Navaviyya")
 
     if msg.text == "⏮ Олдинги":
         await msg.answer("⏮ Олдинги",
@@ -96,6 +99,7 @@ async def arbaintextfunc(msg: types.Message, state:FSMContext):
 
 @dp.message_handler(state = "arbain_roviy")
 async def arbainroviyfunc(msg: types.Message, state:FSMContext):
+    await statdb.set_statistics(chapter_name="Arba'in Navaviyya")
 
     if msg.text == "⏮ Олдинги":
         await msg.answer("⏮ Олдинги",

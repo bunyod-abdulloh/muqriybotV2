@@ -1,12 +1,11 @@
-from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 from aiogram.dispatcher import FSMContext
+from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 
 from handlers.users.ilmiysuhbatlar_hr import CHANNEL_ID
 from keyboards.default.ilmiysuhbatlar_dk import ilmiy_suhbatlar_home_page, audio_video_page
 from keyboards.inline.ilmiy_suhbatlar_harxil import tort_suhbat_video, tort_suhbat_audio, ilm_suhbat_inkeys
-from states.toplam_states import TortToplam
-
 from loader import dp, bot
+from states.toplam_states import TortToplam
 
 
 def collection_four():

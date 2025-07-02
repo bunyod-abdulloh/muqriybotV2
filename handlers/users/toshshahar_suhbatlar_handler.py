@@ -1,10 +1,10 @@
-from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 from aiogram.dispatcher import FSMContext
+from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 
 from keyboards.default.ilmiysuhbatlar_dk import audio_video_page, ilmiy_suhbatlar_home_page
 from keyboards.inline.ilmiy_suhbatlar_harxil import toshshahar_suhbat_audio, toshshahar_suhbat_video, ilm_suhbat_inkeys
-from states.ilmiy_suhbatlar_states import ToshShaharSuhbatlar
 from loader import dp, bot
+from states.ilmiy_suhbatlar_states import ToshShaharSuhbatlar
 
 CHANNEL_ID = -1001705654629
 

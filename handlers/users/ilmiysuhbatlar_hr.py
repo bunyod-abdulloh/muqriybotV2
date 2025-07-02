@@ -4,8 +4,8 @@ from aiogram.dispatcher import FSMContext
 from keyboards.default.ilmiysuhbatlar_dk import (audio_video_page, ilmiy_suhbatlar_home_page, ilmiy_suhbatlar_menu,
                                                  ilmiy_suhbatlar_videos, ilmiy_suhbatlar_buttons,
                                                  ilmiy_suhbatlar_audios)
+from loader import dp, bot, statdb
 from states.ilmiy_suhbatlar_states import ToshShaharSuhbatlar
-from loader import dp, bot
 
 CHANNEL_ID = -1001705654629
 
@@ -21,6 +21,7 @@ async def ilm_suh(msg: types.Message, state: FSMContext):
 
 @dp.message_handler(state="ilmsuh")
 async def ilmsuh_func(msg: types.Message, state: FSMContext):
+    await statdb.set_statistics(chapter_name="Ilmiy suhbatlar")
     if msg.text in ilmiy_suhbatlar_menu.keys():
         if msg.text == "1-тўплам":
             await bot.copy_message(chat_id=msg.from_user.id,

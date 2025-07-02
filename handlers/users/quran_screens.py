@@ -1,10 +1,9 @@
 from aiogram.dispatcher import FSMContext
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message, CallbackQuery
 
+from data.config import QURAN_SCREENSHOTS
 from keyboards.default.start_dk import main_keyboard
-from loader import dp, bot
-
-QURAN_SCREENSHOTS = -1001801981610
+from loader import dp, bot, statdb
 
 dict_one = {"Fotiha": 9487, "Baqara": 9488, "Oli Imron": 9489, "Niso": 9490, "Moida": 9491, "An'om": 9492, "A'rof": 9493,
             "Anfol": 9494, "Tavba": 9495, "Yunus": 9496, "Hud": 9497, "Yusuf": 9498, "Ra'd": 9499, "Ibrohim": 9500,
@@ -48,6 +47,7 @@ markup_back.add(InlineKeyboardButton(text='⬅️ Ortga', callback_data='qs_back
 
 @dp.message_handler(text="📖 Қуръони карим", state='*')
 async def bot_start(msg: Message, state: FSMContext):
+    await statdb.upsert_statistics(chapter_name="Qur'oni Karim (skrinshot)")
     await msg.answer('Sura nomini tanlang:', reply_markup=markup_one)
     await state.set_state('qs_one')
 

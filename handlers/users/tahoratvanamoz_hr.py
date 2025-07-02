@@ -1,12 +1,13 @@
 from aiogram import types
-
-from loader import dp
 from aiogram.dispatcher import FSMContext
+
 from keyboards.default.tahoratvanamoz_dk import na
+from loader import dp, statdb
 
 
 @dp.message_handler(text="⏳ Таҳорат ва намоз")
 async def tahoratvanamoz_hand(msg: types.Message, state:FSMContext):
+	await statdb.upsert_statistics(chapter_name="Tahorat va namoz")
 	await msg.answer("⏳ Таҳорат ва намоз", reply_markup=na)
 	await state.set_state("na")
 

@@ -1,13 +1,12 @@
-
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
+from data.config import QADAMJOLAR
 from keyboards.inline.qadamjolar_inline_buttons import MENU_POST, LATEST_RESULT, chunks, key_returner, \
     qadamjolar_back_button
 from loader import dp, bot
 from states.users_state import MuqriyVideoStates
 
-CHANNEL_ID = -1001562489298
 ITEMS = list(range(1, 40))
 
 
@@ -55,7 +54,7 @@ async def callback_resp(call: types.CallbackQuery, state: FSMContext):
     if call.data in LATEST_RESULT.keys():
         await bot.copy_message(
             chat_id=call.from_user.id,
-            from_chat_id=CHANNEL_ID,
+            from_chat_id=QADAMJOLAR,
             message_id=LATEST_RESULT[call.data],
             reply_markup=qadamjolar_back_button
         )

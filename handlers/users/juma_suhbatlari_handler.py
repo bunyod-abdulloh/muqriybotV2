@@ -1,11 +1,10 @@
-from aiogram.types import CallbackQuery, Message
 from aiogram.dispatcher import FSMContext
+from aiogram.types import CallbackQuery, Message
 
 from keyboards.default.audio_video_dk import alldk
-from states.jumasuhbatlari_states import JumaSuhbatlari
 from keyboards.inline.juma_suhbatlari_inkeys import juma_suhbatlari_keys, video_dict, audio_dict, back_menyu_keys
-
-from loader import bot, dp
+from loader import bot, dp, statdb
+from states.jumasuhbatlari_states import JumaSuhbatlari
 
 VIDEO_CHANNEL = -1001739337616
 AUDIO_CHANNEL = -1001847685422
@@ -32,6 +31,7 @@ async def juma_title():
 
 @dp.message_handler(text='📌 Жума мавъизалари', state='*')
 async def jumamaviza_func(msg: Message, state: FSMContext):
+    await statdb.set_statistics(chapter_name="Juma mav'izalari")
     await msg.answer(msg.text, reply_markup=alldk)
     await JumaSuhbatlari.juma_one.set()
 

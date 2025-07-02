@@ -1,11 +1,13 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from loader import dp
 from keyboards.default.zikrlar_dk import zk_m, toz, tuz
+from loader import dp, statdb
+
 
 @dp.message_handler(text = "📿 Тонгги ва кечки зикрлар")
 async def zikrlar_hands(msg: types.Message, state:FSMContext):
+	await statdb.upsert_statistics(chapter_name="Tongi va kechki zikrlar")
 	await msg.answer("Тонги ва кечки зикрлар", reply_markup=zk_m)
 	await state.set_state("zk_m")
 

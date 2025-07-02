@@ -1,8 +1,8 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from loader import dp
 from keyboards.default.shamoil_dk import sham_m, sham_v, sham_a
+from loader import dp, statdb
 
 hazrat = "\n\n<a href='https://www.facebook.com/hazratim.uz'>Facebook</a> | <a href='https://www.instagram.com/hazratim_uz/'>Instagram</a> | <a href='https://t.me/joinchat/AAAAAFki3TLL4WCIyXw22g'>Telegram</a> | <a href='https://www.youtube.com/channel/UCWQFfFcK6Qt1zNrdlY1LF9Q'>Youtube</a>"
 
@@ -10,6 +10,7 @@ hazrat = "\n\n<a href='https://www.facebook.com/hazratim.uz'>Facebook</a> | <a h
 
 @dp.message_handler(text = "☀ Шамоилул Муҳаммадия")
 async def shamoil_menyu(msg: types.Message, state:FSMContext):
+    await statdb.upsert_statistics(chapter_name="Shamoili Muhammadiya")
     await msg.answer_photo(photo="AgACAgIAAxkBAAIBwGI_Df9YBlWxOLW01nPiNNONGUhhAAInsDEbCC-JSRowbITtWFr2AQADAgADeQADIwQ",
                            caption="\n\n“Шайх Муҳаммад Содиқ Муҳаммад Юсуф” жоме масжидида сийратга оид суҳбатлар "
                                    "давом этади."

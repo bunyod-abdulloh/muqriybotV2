@@ -1,8 +1,8 @@
 from aiogram import types
-
 from aiogram.dispatcher import FSMContext
-from keyboards.default.mavlid_dk import mbm_dk,m1_dk,sharif_dk,m1_dict,m2_dict,sh_dict
-from loader import dp,bot
+
+from keyboards.default.mavlid_dk import mbm_dk, m1_dk, sharif_dk, m1_dict, m2_dict, sh_dict
+from loader import dp, bot, statdb
 
 CHANNEL_ID = -1001705654629
 
@@ -10,6 +10,7 @@ habar = "Қуйидаги тугмалардан бирини танланг:"
 
 @dp.message_handler(text = "🔆 Мавлид", state="*")
 async def mavlidumumiy(msg: types.Message, state:FSMContext):
+	await statdb.set_statistics(chapter_name="Mavlid")
 	await msg.answer("🔆 Мавлид",
 					 reply_markup = await mbm_dk())
 	await state.set_state("mavlid_state")

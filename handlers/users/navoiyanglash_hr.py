@@ -1,9 +1,8 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from loader import dp
-
 from keyboards.default.navoiyanglash_dk import nang_umum_keys, nang_aud_keys, nang_vid_keys
+from loader import dp, statdb
 
 islomuz = "\n\n<a href='https://www.facebook.com/www.islom.uz'>Facebook</a> | <a href='https://www.instagram.com/islomuz_kanal/'>Instagram</a> | <a href='https://t.me/joinchat/AAAAAEHZQeuVw_Jq0k57Bw'>Telegram</a> | <a href='https://www.youtube.com/user/islomuz?sub_confirmation=1'>Youtube</a>"
 
@@ -11,6 +10,7 @@ nang_dict = {14:{'v':'BAACAgIAAxkBAAEGOaFitCCCIrHvgChnCm1PWwtmG0Pq_QACAh0AAuyfiE
 
 @dp.message_handler(text = "📑 Навоийни англаш сари")
 async def nang_umum_hands(msg: types.Message, state:FSMContext):
+	await statdb.upsert_statistics(chapter_name="Navoiyni anglash sari")
 	await msg.answer("<b>\"Навоийни англаш сари\"</b> туркум суҳбатлари.", reply_markup=nang_umum_keys)
 	await state.set_state("nang")
 
@@ -18,6 +18,7 @@ async def nang_umum_hands(msg: types.Message, state:FSMContext):
 async def nang_aud_hands(msg: types.Message, state:FSMContext):
 	await msg.answer("🎧 Ayдио", reply_markup=nang_aud_keys)
 	await state.set_state("nanga")
+
 
 @dp.message_handler(text = "⏮ Oлдинги", state="nanga")
 async def nang_back_o(msg: types.Message, state:FSMContext):

@@ -75,9 +75,9 @@ class Database:
             """
             CREATE TABLE IF NOT EXISTS statistics (
                 id SERIAL PRIMARY KEY,
+                created_at DATE DEFAULT CURRENT_DATE,
                 chapter_name VARCHAR(255) NULL UNIQUE,
-                view_count INTEGER DEFAULT 1,
-                created_at DATE CURRENT_DATE
+                view_count INTEGER DEFAULT 1                
             ); 
             """
         ]

@@ -76,7 +76,8 @@ class Database:
             CREATE TABLE IF NOT EXISTS statisticts (
                 id SERIAL PRIMARY KEY,
                 chapter_name VARCHAR(255) NULL,
-                view_count INTEGER DEFAULT 0 
+                view_count INTEGER DEFAULT 1
+            ); 
             """
         ]
         for query in queries:

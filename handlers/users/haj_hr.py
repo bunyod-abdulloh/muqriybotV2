@@ -10,7 +10,7 @@ haj_dict = {1:{'v':'BAACAgIAAxkBAAEHR6pizPDZTkItGjGp0ZbpiPP1eH2nUAACtRgAAgjeaEpi
 @dp.message_handler(text="🕋 Ҳаж - 2022", state="*")
 async def hajvid(msg: types.Message, state: FSMContext):
 	await state.finish()
-	await statdb.set_statistics(chapter_name="Haj-2022")
+	await statdb.upsert_statistics(chapter_name="Haj-2022")
 	for qulf, kalit in haj_dict.items():
 		await msg.answer_video(video=kalit['v'], caption=kalit['c'], reply_markup=main_keyboard)
 

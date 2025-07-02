@@ -22,7 +22,7 @@ async def ilm_suh(msg: types.Message, state: FSMContext):
 
 @dp.message_handler(state="ilmsuh")
 async def ilmsuh_func(msg: types.Message, state: FSMContext):
-    await statdb.set_statistics(chapter_name="Ilmiy suhbatlar")
+    await statdb.upsert_statistics(chapter_name="Ilmiy suhbatlar")
     if msg.text in ilmiy_suhbatlar_menu.keys():
         if msg.text == "1-тўплам":
             await bot.copy_message(chat_id=msg.from_user.id,

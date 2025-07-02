@@ -12,7 +12,7 @@ iqro_dict = {1:{'v':'BAACAgIAAxkBAAEDwehinNv9VQHYW_JKHJByJrTqzN3ipQACsgIAApzS2Ur
 async def iqrohands(msg: types.Message, state: FSMContext):
     await state.finish()
     await msg.answer("🗞 Иқро", reply_markup=iqro_keys)
-    await statdb.set_statistics(chapter_name="Iqro")
+    await statdb.upsert_statistics(chapter_name="Iqro")
     await Iqro.a.set()
 
 @dp.message_handler(text="1-сон", state=Iqro.a)

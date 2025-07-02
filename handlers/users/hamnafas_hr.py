@@ -48,7 +48,7 @@ async def hamnafasvid(msg: types.Message, state: FSMContext):
 
 @dp.message_handler(state="hamnafas_state")
 async def handle_hamnafas(msg: types.Message, state: FSMContext):
-    await statdb.set_statistics(chapter_name="Qur'on ila hamnafas")
+    await statdb.upsert_statistics(chapter_name="Qur'on ila hamnafas")
     hd = hamnafas_dklist
     mt = msg.text
 

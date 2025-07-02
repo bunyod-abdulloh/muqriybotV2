@@ -17,7 +17,7 @@ async def hvid_hands(msg: types.Message, state:FSMContext):
 
 @dp.message_handler(state="hamsafar_state")
 async def hamsafar_func(msg: types.Message):
-	await statdb.set_statistics(chapter_name="Hamsafar")
+	await statdb.upsert_statistics(chapter_name="Hamsafar")
 	if msg.text in h_empty.keys():
 		await bot.copy_message(
 			chat_id=msg.from_user.id,

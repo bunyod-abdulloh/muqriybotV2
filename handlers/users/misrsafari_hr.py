@@ -19,7 +19,7 @@ misr_dict = {1: {'v': 'BAACAgIAAxkBAAEEvepipRYCt8w7n7Kbp4Azi0KcKmDViwACvxsAAtXkK
 @dp.message_handler(text="🏜 Миср сафари", state="*")
 async def misrsafari(msg: types.Message, state: FSMContext):
 	await state.finish()
-	await statdb.set_statistics(chapter_name="Misr safari")
+	await statdb.upsert_statistics(chapter_name="Misr safari")
 	await msg.answer("🏜 Миср сафари", reply_markup=misrsafari_keys)
 
 

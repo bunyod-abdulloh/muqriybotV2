@@ -6,7 +6,7 @@ from data.file_ids import husary_dict
 from handlers.quran.muqriyrecitation_hr import quran_hasanxon_husaynxon_alert
 from keyboards.inline.quran_ibuttons import key_returner_muqriy_husary
 from loader import dp, db
-from utils.functions.all import extracter
+from services.admin import extracter
 
 
 @dp.message_handler(F.text == "husary")

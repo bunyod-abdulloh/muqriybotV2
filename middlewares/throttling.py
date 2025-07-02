@@ -22,7 +22,7 @@ class ThrottlingMiddleware(BaseMiddleware):
     async def on_process_message(self, message: types.Message, data: dict):
         handler = current_handler.get()
         dispatcher = Dispatcher.get_current()
-        if message.from_user.id == int(SUPER_ADMIN):
+        if message.from_user.id == int(SUPER_ADMIN[0]):
             pass
         else:
             if handler:

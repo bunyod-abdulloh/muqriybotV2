@@ -7,3 +7,4 @@ class AdminSqlButtons(StatesGroup):
 
 class AdminStates(StatesGroup):
     ADD_ID = State()
+    GET_STATISTICS = State()

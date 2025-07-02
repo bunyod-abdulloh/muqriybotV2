@@ -4,7 +4,7 @@ env = Env()
 env.read_env()
 
 BOT_TOKEN = env.str("BOT_TOKEN")
-SUPER_ADMIN = env.str("SUPER_ADMIN")
+SUPER_ADMIN = env.list("SUPER_ADMIN")
 IP = env.str("IP")
 CHANNEL_ID = env.str("CHANNEL_ID")
 CHANNEL_LINK = env.str("CHANNEL_LINK")
